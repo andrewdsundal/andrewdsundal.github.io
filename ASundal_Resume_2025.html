@@ -15,6 +15,9 @@
 * { box-sizing: border-box; }
 body { margin: 0; color: #231f20; background: #eeecea; font-family: Arial, sans-serif; }
 .toolbar { width: min(8.5in, calc(100% - 32px)); margin: 20px auto 14px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; color: #595553; }
+.toolbar-left { display: flex; align-items: center; gap: 18px; }
+.home-link { color: #231f20; font-weight: 700; letter-spacing: .1em; text-decoration: none; text-transform: uppercase; }
+.home-link:hover { color: #bf1530; }
 .toolbar strong { color: #231f20; font-size: 14px; }
 button { color: #fff; background: #bf1530; border: none; border-radius: 5px; padding: 10px 15px; font: inherit; font-weight: 600; cursor: pointer; }
 button:hover { background: #a81229; }
@@ -52,7 +55,7 @@ svg text { user-select: text; -webkit-user-select: text; font-synthesis: none; }
   Print at 100% on US Letter with headers and footers disabled.
 -->
 <header class="toolbar" aria-label="Document tools">
-  <span><strong>Andrew Sundal</strong> &nbsp;·&nbsp; Résumé</span>
+  <span class="toolbar-left"><a class="home-link" href="index.html">Home</a><span><strong>Andrew Sundal</strong> &nbsp;·&nbsp; Résumé</span></span>
   <button type="button" id="print-button">Print / Save PDF</button>
 </header>
 <main aria-label="Résumé">

@@ -50,6 +50,12 @@
     display: flex; justify-content: center;
     padding: 40px 20px 60px;
   }
+  .home-link {
+    position: fixed; top: 18px; left: 20px; z-index: 10;
+    color: var(--ink); font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+  }
+  .home-link:hover { color: var(--accent); }
   .sheet { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: 26px; }
   .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; }
   .titleblock { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: end; }
@@ -127,6 +133,7 @@
 </style>
 </head>
 <body>
+<a class="home-link" href="index.html">Home</a>
 <div class="sheet">
   <div class="titleblock">
     <div>

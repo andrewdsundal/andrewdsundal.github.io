@@ -107,6 +107,27 @@ header {
   margin-bottom: 4vh;
 }
 
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.hero-copy h1 {
+  margin-bottom: 2rem;
+}
+
+.hero-portrait {
+  width: min(100%, 460px);
+  aspect-ratio: 1;
+  justify-self: end;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 50%;
+  filter: grayscale(12%);
+}
+
 .intro-text {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: 1.2;
@@ -114,32 +135,6 @@ header {
   max-width: 800px;
   font-weight: 500;
   letter-spacing: -0.02em;
-}
-
-/* Minimal Resume Container */
-.embed-container {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-top: 56.25%;
-  /* 16:9 Aspect Ratio */
-  min-height: 400px;
-  background: #f5f5f5;
-  border: 1px solid #e5e5e5;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.embed-container:hover {
-  transform: scale(1.02);
-}
-
-.embed-container iframe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  border: none;
 }
 
 /* Navigation Link Override */
@@ -151,6 +146,34 @@ header {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
+}
+
+.home-navigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: baseline;
+}
+
+.home-navigation .nav-link:nth-child(2) {
+  text-align: center;
+  justify-self: center;
+}
+
+.home-navigation .nav-link:last-child {
+  text-align: right;
+  justify-self: end;
+}
+
+.home-link {
+  position: fixed;
+  z-index: 100;
+  top: 1.5rem;
+  left: 2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* Interactive Canvas from about.html */
@@ -189,4 +212,36 @@ header {
 
 .delay-2 {
   animation-delay: 0.2s;
+}
+
+@media (max-width: 760px) {
+  .container {
+    padding: 3rem 1.25rem;
+    gap: 3rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-portrait {
+    width: min(78vw, 380px);
+    justify-self: start;
+  }
+
+  .home-navigation {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .home-navigation .nav-link:nth-child(2),
+  .home-navigation .nav-link:last-child {
+    text-align: left;
+    justify-self: start;
+  }
+
+  .home-link {
+    top: 1rem;
+    left: 1.25rem;
+  }
 }
