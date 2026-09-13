@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunny — a prototype me-bot</title>
+<meta name="description" content="An early prototype personal assistant grounded in Andrew Sundal's mission statement and knowledge vault.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --ink: #1c2b3a;
+    --ink-soft: #4b5b66;
+    --ink-faint: #8b9aa1;
+    --line: #d3d8d1;
+    --line-strong: #aab3ac;
+    --accent: #3e7c6b;
+    --accent-ink: #f3f8f6;
+    --warm: #c1652f;
+    --danger: #a4432c;
+    --shadow: 0 1px 2px rgba(28, 43, 58, 0.06);
+    --radius: 3px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101820; --surface: #101820; --surface-raised: #1b2732;
+      --ink: #e7ecee; --ink-soft: #a6b3ba; --ink-faint: #6c7a82;
+      --line: #2a3740; --line-strong: #3c4b55;
+      --accent: #5fb39e; --accent-ink: #0d1a17; --warm: #e08a52; --danger: #e0836a;
+      --shadow: 0 1px 3px rgba(0,0,0,0.35); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101820; --surface: #101820; --surface-raised: #1b2732;
+    --ink: #e7ecee; --ink-soft: #a6b3ba; --ink-faint: #6c7a82;
+    --line: #2a3740; --line-strong: #3c4b55;
+    --accent: #5fb39e; --accent-ink: #0d1a17; --warm: #e08a52; --danger: #e0836a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.35); color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    display: flex; justify-content: center;
+    padding: 40px 20px 60px;
+  }
+  .sheet { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: 26px; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+  .titleblock { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: end; }
+  .titleblock h1 {
+    margin: 0 0 6px; font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    font-size: 26px; letter-spacing: 0.01em; color: var(--ink);
+  }
+  .titleblock .tagline { margin: 0; font-style: italic; color: var(--ink-soft); font-size: 15.5px; max-width: 46ch; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, auto); gap: 2px 18px; text-align: right; }
+  .meta-grid .k { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; }
+  .meta-grid .v { color: var(--ink-soft); grid-row: 2; font-weight: 500; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; }
+  .intro { font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); }
+  .intro strong { color: var(--ink); font-weight: 500; }
+  .prompts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.02em;
+    border: 1px solid var(--line-strong); background: var(--surface-raised); color: var(--ink-soft);
+    padding: 7px 11px; border-radius: var(--radius); cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .transcript {
+    background: var(--surface); min-height: 260px; max-height: 56vh; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .empty-note { font-size: 14px; color: var(--ink-faint); font-style: italic; padding: 6px 0 14px; }
+  .turn { display: flex; flex-direction: column; gap: 4px; }
+  .turn .who { display: flex; align-items: baseline; gap: 8px; }
+  .turn .who .name {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .turn.user .who .name { color: var(--warm); }
+  .turn.assistant .who .name { color: var(--accent); }
+  .turn .body { font-size: 16.5px; line-height: 1.62; color: var(--ink); white-space: pre-wrap; }
+  .turn .body.pending { color: var(--ink-faint); font-style: italic; }
+  .turn .body .cursor {
+    display: inline-block; width: 7px; height: 1em; background: var(--accent);
+    margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .turn .body .cursor { animation: none; } }
+  .turn .err {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+    border-radius: var(--radius); padding: 8px 10px; display: inline-flex;
+    align-items: center; gap: 8px; width: fit-content;
+  }
+  .turn .err button {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; background: none;
+    border: 1px solid var(--danger); color: var(--danger); border-radius: var(--radius);
+    padding: 3px 8px; cursor: pointer;
+  }
+  .composer { background: var(--surface-raised); padding-top: 14px; display: flex; gap: 10px; align-items: flex-end; }
+  .composer textarea {
+    flex: 1; resize: none; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg); color: var(--ink); font-family: "Newsreader", Georgia, serif;
+    font-size: 16px; padding: 10px 12px; line-height: 1.4; max-height: 140px;
+  }
+  .composer textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .composer button.send {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.05em;
+    text-transform: uppercase; background: var(--accent); color: var(--accent-ink);
+    border: none; border-radius: var(--radius); padding: 12px 16px; cursor: pointer;
+    box-shadow: var(--shadow); white-space: nowrap;
+  }
+  .composer button.send:disabled { background: var(--line-strong); color: var(--surface); cursor: default; box-shadow: none; }
+  .composer button.send:not(:disabled):hover { filter: brightness(1.05); }
+  .footnote {
+    margin-top: 12px; font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: 0.02em; color: var(--ink-faint); text-align: center; line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="titleblock">
+    <div>
+      <h1>Sunny</h1>
+      <p class="tagline">Andrew's own words, answering back — a first public test of the me-bot idea.</p>
+    </div>
+    <div class="meta-grid mono">
+      <span class="k">source</span><span class="k">status</span><span class="k">rev</span>
+      <span class="v">vault</span><span class="v">prototype</span><span class="v" id="rev-date">—</span>
+    </div>
+  </div>
+
+  <div class="intro">
+    Grounded only in what's actually written down so far: <strong>the mission statement</strong> and
+    <strong>the vault's own operating notes</strong>. Nothing about specific projects or work history
+    yet — that hasn't been ingested. Ask about values, mission, or how this project works.
+  </div>
+
+  <div class="prompts" id="prompts">
+    <button class="chip" type="button">What matters most to you?</button>
+    <button class="chip" type="button">What are you building here?</button>
+    <button class="chip" type="button">What do you mean, "a few things that compound"?</button>
+  </div>
+
+  <div class="transcript" id="transcript">
+    <div class="empty-note" id="empty-note">No messages yet — ask something, or use one of the prompts above.</div>
+  </div>
+
+  <div class="composer">
+    <textarea id="input" rows="1" placeholder="Ask Sunny something…" aria-label="Message"></textarea>
+    <button class="send" id="sendBtn" type="button">Send</button>
+  </div>
+
+  <div class="footnote" id="footnote">
+    A prototype — replies are limited to a few messages per minute to keep it running for everyone.
+  </div>
+</div>
+
+<script>
+(function () {
+  const WORKER_URL = "https://sunny-chat.andrewdsundal.workers.dev/chat";
+
+  const revEl = document.getElementById("rev-date");
+  revEl.textContent = new Date().toISOString().slice(0, 10);
+
+  const transcriptEl = document.getElementById("transcript");
+  let emptyNote = document.getElementById("empty-note");
+  const inputEl = document.getElementById("input");
+  const sendBtn = document.getElementById("sendBtn");
+  const footnote = document.getElementById("footnote");
+  const promptsEl = document.getElementById("prompts");
+
+  let turns = [];
+  let busy = false;
+
+  function autoGrow() {
+    inputEl.style.height = "auto";
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + "px";
+  }
+  inputEl.addEventListener("input", autoGrow);
+
+  function addTurn(role, text) {
+    if (emptyNote) { emptyNote.remove(); emptyNote = null; }
+    const wrap = document.createElement("div");
+    wrap.className = "turn " + role;
+    const who = document.createElement("div");
+    who.className = "who";
+    const name = document.createElement("span");
+    name.className = "name mono";
+    name.textContent = role === "user" ? "you" : "sunny";
+    who.appendChild(name);
+    const body = document.createElement("div");
+    body.className = "body";
+    body.textContent = text;
+    wrap.appendChild(who);
+    wrap.appendChild(body);
+    transcriptEl.appendChild(wrap);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+    return body;
+  }
+
+  function addError(message, retryFn) {
+    const wrap = document.createElement("div");
+    wrap.className = "turn assistant";
+    const box = document.createElement("div");
+    box.className = "err";
+    const span = document.createElement("span");
+    span.textContent = message;
+    box.appendChild(span);
+    if (retryFn) {
+      const btn = document.createElement("button");
+      btn.textContent = "Retry";
+      btn.onclick = retryFn;
+      box.appendChild(btn);
+    }
+    wrap.appendChild(box);
+    transcriptEl.appendChild(wrap);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  }
+
+  function setBusy(isBusy) {
+    busy = isBusy;
+    sendBtn.disabled = isBusy;
+    inputEl.disabled = isBusy;
+  }
+
+  async function send(text) {
+    if (!text.trim() || busy) return;
+
+    turns.push({ role: "user", content: text });
+    addTurn("user", text);
+    inputEl.value = "";
+    autoGrow();
+
+    const pendingBody = addTurn("assistant", "Thinking…");
+    pendingBody.classList.add("pending");
+
+    setBusy(true);
+    try {
+      const resp = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ turns }),
+      });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        pendingBody.remove();
+        const retryText = text;
+        turns.pop();
+        addError(data.error || "Something went wrong — try again.", () => send(retryText));
+        return;
+      }
+
+      pendingBody.classList.remove("pending");
+      pendingBody.textContent = data.text;
+      turns.push({ role: "assistant", content: data.text });
+    } catch (err) {
+      pendingBody.remove();
+      const retryText = text;
+      turns.pop();
+      addError("Couldn't reach Sunny — check your connection and try again.", () => send(retryText));
+    } finally {
+      setBusy(false);
+      inputEl.focus();
+    }
+  }
+
+  sendBtn.addEventListener("click", () => send(inputEl.value));
+  inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      send(inputEl.value);
+    }
+  });
+  promptsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".chip");
+    if (!btn) return;
+    send(btn.textContent);
+  });
+})();
+</script>
+</body>
+</html>

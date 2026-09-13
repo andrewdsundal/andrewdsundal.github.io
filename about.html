@@ -1,80 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Andrew Sundal</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Link to shared CSS -->
+  <title>About / Andrew Sundal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Specific styles for About page layout */
+    .about-content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .about-header {
+      font-size: clamp(3rem, 8vw, 6rem);
+      margin-bottom: 2rem;
+      line-height: 1;
+    }
+
+    .about-text {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      line-height: 1.3;
+      max-width: 900px;
+      color: var(--text-main);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-link {
+      margin-top: 4rem;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>About Me</h1>
-  <p>This is the About page for Andrew Sundal. Add your content here.</p>
-  <!-- Canvas for animation -->
+
+  <!-- Canvas for ultra-subtle background animation -->
   <canvas id="canvas"></canvas>
+
+  <main class="about-content">
+    <div class="animate-reveal">
+      <h1 class="about-header">About.</h1>
+      <p class="about-text">
+        This is the About page for Andrew Sundal. I am passionate about building stark, fast, and minimal experiences on
+        the web that get straight to the point.
+      </p>
+
+      <a href="index.html" class="nav-link">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+          stroke-linecap="square" stroke-linejoin="miter">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Return
+      </a>
+    </div>
+  </main>
 
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Resize canvas
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-    const balls = [];
+    // Subtle, slow-moving geometric particle system
+    const particles = [];
+    const particleCount = 40; // reduced count for minimalism
 
-    for (let i = 0; i < 50; i++) {
-      balls.push({
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: 10 + Math.random() * 10,
-        color: `hsl(${Math.random() * 360}, 70%, 60%)`,
-        vx: (Math.random() - 0.5) * 4,
-        vy: (Math.random() - 0.5) * 4
+        size: Math.random() * 40 + 10,
+        vx: (Math.random() - 0.5) * 0.2, // Very slow
+        vy: (Math.random() - 0.5) * 0.2,
       });
     }
+
+    let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+    // Smooth mouse tracking
+    let targetMouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    window.addEventListener('mousemove', e => {
+      targetMouse.x = e.clientX;
+      targetMouse.y = e.clientY;
+    });
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (let ball of balls) {
-        // Move
-        ball.x += ball.vx;
-        ball.y += ball.vy;
+      // Ease mouse position
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        // Bounce off walls
-        if (ball.x < ball.radius || ball.x > canvas.width - ball.radius) ball.vx *= -1;
-        if (ball.y < ball.radius || ball.y > canvas.height - ball.radius) ball.vy *= -1;
+      // Draw faint grid pattern that reacts to mouse
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.03)';
+      ctx.lineWidth = 1;
 
-        // Draw
+      const gridSize = 100;
+      const offsetX = (mouse.x / canvas.width) * 50;
+      const offsetY = (mouse.y / canvas.height) * 50;
+
+      for (let x = 0; x < canvas.width; x += gridSize) {
         ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fillStyle = ball.color;
-        ctx.fill();
+        ctx.moveTo(x - offsetX, 0);
+        ctx.lineTo(x - offsetX, canvas.height);
+        ctx.stroke();
       }
+
+      for (let y = 0; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y - offsetY);
+        ctx.lineTo(canvas.width, y - offsetY);
+        ctx.stroke();
+      }
+
+
+      // Draw slow moving abstract shapes
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < -100) p.x = canvas.width + 100;
+        if (p.x > canvas.width + 100) p.x = -100;
+        if (p.y < -100) p.y = canvas.height + 100;
+        if (p.y > canvas.height + 100) p.y = -100;
+
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+        ctx.lineWidth = 1;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.x * 0.001); // Slowly rotate
+
+        // Draw open squares
+        ctx.strokeRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      }
+
+      // Draw subtle mouse cursor ring
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 40, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 51, 102, 0.1)'; // faint red accent
+      ctx.lineWidth = 1;
+      ctx.stroke();
 
       requestAnimationFrame(animate);
     }
-
     animate();
-
-    // Add mouse interaction
-    canvas.addEventListener('mousemove', e => {
-      for (let ball of balls) {
-        const dx = ball.x - e.clientX;
-        const dy = ball.y - e.clientY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-          ball.vx += dx * 0.01;
-          ball.vy += dy * 0.01;
-        }
-      }
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
-  <a href="index.html">Back to Home</a>
 </body>
+
 </html>

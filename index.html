@@ -4,24 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andrew Sundal — Portfolio & Resume</title>
+  <title>Andrew Sundal / Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>Andrew Sundal</h1>
-  <h2>Portfolio & Resume</h2>
-  <p>Welcome! Below you can view my resume embedded directly from Canva. You can also open it in a new tab using the
-    link below.</p>
 
-  <div class="embed-container">
-    <iframe loading="lazy" src="https://www.canva.com/design/DAF5tC8785g/SHAB0DHTkrB0D-2vWpqKAg/view?embed"
-      allowfullscreen="allowfullscreen" allow="fullscreen">
-    </iframe>
-  </div>
+  <main class="container">
 
-  <p><a href="about.html">About Me</a></p>
-  <a href="index.html">Back to Home</a>
+    <!-- Hero / Editorial Header -->
+    <header class="animate-reveal">
+      <h1>Andrew<br>Sundal.</h1>
+      <p class="intro-text">
+        I am a developer focused on crafting clean, high-performance, and deeply intentional web experiences. Below is
+        my digital resume.
+      </p>
+    </header>
+
+    <!-- Resume Presentation -->
+    <section class="animate-reveal delay-1">
+      <div class="embed-container">
+        <iframe loading="lazy" src="https://www.canva.com/design/DAF5tC8785g/SHAB0DHTkrB0D-2vWpqKAg/view?embed"
+          allowfullscreen="allowfullscreen" allow="fullscreen">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="animate-reveal delay-2">
+      <a href="about.html" class="nav-link">
+        Read About Me
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+          stroke-linecap="square" stroke-linejoin="miter">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </nav>
+
+  </main>
+
 </body>
 
 </html>
