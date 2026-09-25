@@ -1,0 +1,799 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2026 AI Workshop SEAOH</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="3e4ee14a-f1cf-8098-89e3-d78bbac15411" class="page sans"><header><h1 class="page-title" dir="auto">2026 AI Workshop SEAOH</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><details open="" class="" dir="auto"><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0"><h1 id="3e4ee14a-f1cf-80e6-8098-d165437cbff9" style="display:inline-block">Workshop Handouts</h1></summary><div class="indented"><h2 id="3e4ee14a-f1cf-803b-a76b-daccb406c17e" class="" dir="auto"><strong>Goal: Unlock commonly overlooked features in Claude/ChatGP and learn how to work smarter, faster, and more creatively.</strong></h2><h3 id="3e4ee14a-f1cf-80ac-a424-e60255b7ac0f" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default"><strong><span style="border-bottom:0.05em solid">Prework: </span></strong></mark></h3><ol type="1" id="3e4ee14a-f1cf-800d-aa8b-cad475cbd9a8" class="numbered-list" start="1" dir="auto"><li><mark class="highlight-default" data-notion-highlight="default">[Minimum]  This portion will focus on ChatGPT as the tool to demonstrate prompting concepts. Make sure you’re able to run </mark><mark class="highlight-default" data-notion-highlight="default"><a href="https://claude.ai">Claude </a></mark><mark class="highlight-default" data-notion-highlight="default">or </mark><mark class="highlight-default" data-notion-highlight="default"><a href="https://chatgpt.com/">ChatGPT </a></mark><mark class="highlight-default" data-notion-highlight="default">prior to starting this section. While using ChatGPT without an account is useful for a quick query, creating a free account is recommended if you plan to use the tool regularly or want more functionality.</mark></li></ol><ol type="1" id="3e4ee14a-f1cf-8012-9f2f-ef2d18948efd" class="numbered-list" start="2" dir="auto"><li><mark class="highlight-default" data-notion-highlight="default">You can follow along using another LLM (such as , Grok, Gemini, etc.). While the concepts are transferable, the specific instructions below may not directly translate to other platforms</mark></li></ol><p id="3e4ee14a-f1cf-80db-bd7d-e6e7437b50cd" class="" dir="auto">
+</p></div></details><details open="" class="" dir="auto"><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0"><h1 id="3e4ee14a-f1cf-80b0-b2ef-fbd45562cc8d" style="display:inline-block"><span style="border-bottom:0.05em solid">Supporting Content - Claude</span></h1></summary><div class="indented"><h2 id="3e4ee14a-f1cf-8015-b29e-e0aa1874beca" class="" dir="auto"><a href="https://claude.ai/new">Claude</a> Setup | Prompting | Examples</h2><ul id="3e4ee14a-f1cf-8026-876f-c45ff7401ad5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">If you see <em><mark class="highlight-blue" data-notion-highlight="blue">blue</mark></em><em> text</em> below, those are example prompts you can copy and paste (or modify) into Claude</li></ul><ul id="3e4ee14a-f1cf-8090-8fcc-e48919bb0d5e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Settings live under <strong>your initials in the lower left corner &gt; Settings</strong>. Paths below start from there.</li></ul><ul id="3e4ee14a-f1cf-80d3-8731-f83278a3fae3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Plan notes: everything is written for a <strong>Free</strong> account unless a row is marked <em>Paid plan (Pro, Max, Team, or Enterprise)</em>.</li></ul><ul id="3e4ee14a-f1cf-808a-b6cd-c24d8bdd1b32" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Verified against Anthropic&#x27;s help center as of September 2026. Claude ships fast — if a menu has moved, the feature name is still the thing to search for.</li></ul><h3 id="3e4ee14a-f1cf-809e-8fe0-e1dadb47cf30" class="" dir="auto"><strong>Generic Prompt Recommendations</strong></h3><ul id="3e4ee14a-f1cf-8066-aa75-d4ec7f0198fa" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Three examples to a good prompt =<ul id="3e4ee14a-f1cf-80cb-b64a-ce61fab5fea2" class="bulleted-list" dir="auto"><li style="list-style-type:circle"> <strong>Context:</strong> The background information that explains the situation, audience, target domain, or goal. It tells the AI <em>who</em> or <em>what</em> setting it is operating within.</li></ul><ul id="3e4ee14a-f1cf-808c-a0eb-c801d4ca420d" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><strong>Instruction or Task:</strong> The clear, specific command telling the AI exactly what task to perform. It often includes guidelines for length, tone, and style.</li></ul><ul id="3e4ee14a-f1cf-80ab-91d1-ff00ee055572" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><strong>Format or Example:</strong> A sample or demonstration of what the ideal output looks like. Providing an example reduces guesswork and steers the AI toward your exact expectations.</li></ul></li></ul><ul id="3e4ee14a-f1cf-80fa-a620-c681b57dd7a8" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><em><mark class="highlight-blue" data-notion-highlight="blue">“Before you start, ask me any clarifying questions and list anything that&#x27;s unclear or missing.”</mark></em></li></ul><ul id="3e4ee14a-f1cf-804c-a5c4-e12610d78699" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><em><mark class="highlight-blue" data-notion-highlight="blue">“Work through this step by step and show your reasoning before you give me the answer.”</mark></em></li></ul><ul id="3e4ee14a-f1cf-8094-b008-eaf6540d5322" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Be clear and direct.</strong> Claude follows explicit instructions well and guesses poorly on purpose. Say the output you want, the audience, the format, and the length.</li></ul><ul id="3e4ee14a-f1cf-800e-b047-c8e6c7ca24e9" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Show it one good example.</strong> A single sample RFI response or calc header teaches format faster than three paragraphs describing it.</li></ul><ul id="3e6ee14a-f1cf-803a-a6ba-d93a652bfe49" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><em><strong>(Optional) </strong></em><strong>Separate your context from your instructions</strong> using simple tags. Claude is trained to read them:<ul id="3e6ee14a-f1cf-8087-a8cd-c3a063d7b59a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">&lt;project_info&gt; 4-story steel office building, SDC C, Site Class D, IBC 2021 / ASCE 7-22 &lt;/project_info&gt;</li></ul><ul id="3e6ee14a-f1cf-802b-8568-c10ff1a39721" class="bulleted-list" dir="auto"><li style="list-style-type:circle">&lt;task&gt; Draft the lateral system narrative for the schematic design report. &lt;/task&gt;*</li></ul></li></ul><ul id="3e4ee14a-f1cf-8035-938e-e80d2dfdcfcd" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Tell Claude what to do when it isn&#x27;t sure.</strong> <em><mark class="highlight-blue" data-notion-highlight="blue">“If a section number isn&#x27;t in the text I pasted, say so instead of guessing.”</mark></em> This is the single highest-value line for engineering work.</li></ul><ul id="3e4ee14a-f1cf-8025-87e7-db38c783c0a4" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Don&#x27;t retype context.</strong> Stable things (your role, tone, standards, disclaimers) belong in <strong>Instructions for Claude</strong> or <strong>Project instructions</strong>, not in every prompt.</li></ul><ul id="3e4ee14a-f1cf-80ae-9fa1-e459762ffe1f" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Prompt about your prompt.</strong> <em>“Rewrite this prompt so it&#x27;s clearer, and tell me what information you&#x27;d still need from me.”</em></li></ul><table id="3e4ee14a-f1cf-80c8-afbe-db7ecc8bdca0" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="3e4ee14a-f1cf-803a-a503-ffb529c6a202" dir="ltr"><th id="Lbvs" class="simple-table-header-color simple-table-header" style="width:138px"><strong>Agenda Item</strong></th><th id="ax&gt;T" class="simple-table-header-color simple-table-header" style="width:362px"><strong>Instructions</strong></th><th id="gAI_" class="simple-table-header-color simple-table-header" style="width:607px"><strong>Comments &amp; Examples</strong></th></tr></thead><tbody><tr id="3e4ee14a-f1cf-800e-aa9e-d5effe818bba" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>1. Privacy &amp; Data Controls</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Configure Claude for safer data controls.</strong><br/>1. <strong>Settings &gt; Privacy &gt; “Help improve our AI models” &gt; OFF</strong> (direct link: claude.ai/settings/data-privacy-controls). On Team/Enterprise this is controlled by your organization owner.<strong>Export or delete your data<br/></strong><br/>2. <strong>Settings &gt; Privacy &gt; Export data.</strong> Also delete individual chats from the chat list, or delete all chats from Settings.<strong>Chats you don&#x27;t want saved at all<br/></strong><br/>3. <strong>Start a new chat &gt; click the ghost icon in the upper right &gt; “Incognito chat.”</strong> The chat gets a black border and the label “Incognito chat.”</td><td id="gAI_" class="" style="width:607px"><strong>Model improvement:</strong> with the setting ON, conversations may be kept in de-identified form for up to <strong>5 years</strong> in model training pipelines. Turning it OFF applies to new chats going forward — data already used in training isn&#x27;t pulled back out.<br/><br/><strong>Deleted chats</strong> disappear from your history immediately and are removed from back-end storage within <strong>30 days</strong>.<br/><br/><strong>Incognito chats</strong> are never used for training, don&#x27;t appear in history, and don&#x27;t feed memory or recaps. You can&#x27;t convert one back to a normal chat, they aren&#x27;t available inside Projects, and they&#x27;re retained ~30 days for safety purposes. Claude still uses your saved instructions and styles in them.<br/><br/><strong>Business plans:</strong> Team and Enterprise conversations fall under commercial terms and aren&#x27;t used to train models by default — confirm specifics with your firm&#x27;s admin before putting client data in any AI tool.<a href="https://privacy.claude.com/">Privacy Center</a></td></tr><tr id="3e4ee14a-f1cf-8012-b4a3-dc78e63babb8" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>2. Before You Paste Anything: Confidentiality &amp; Standard of Care</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>The settings in Item 1 govern what Anthropic does with your data. They don&#x27;t answer whether you&#x27;re permitted to send it. Work through these before the first client file goes in.<br/><br/></strong>1. <strong>Your contracts.</strong> Check the owner-architect-engineer agreement and any NDA for language on third-party services, data processing, and confidentiality. Some owners — healthcare, K-12, government, secure facilities — restrict or prohibit it outright.<br/><br/>2. <strong>Your firm&#x27;s policy.</strong> If there isn&#x27;t one, that&#x27;s your finding to take back to leadership. If there is one, know which tools and which categories of data it actually approves.<br/><br/>3. <strong>Your professional liability carrier.</strong> Several now publish AI guidance, and some ask about AI use at renewal.<br/><br/>4. <strong>Your licensure board.</strong> Rules on responsible charge and sealing didn&#x27;t change because the tools improved. You are the engineer of record for everything you seal.5. <strong>Disclosure.</strong> Decide with your firm whether and how AI use gets disclosed to clients. Contract language on this is starting to appear.<br/><br/><strong><span style="border-bottom:0.05em solid">Habits that lower the stakes today:<br/></span></strong><strong>De-identify.</strong> Strip project name, address, owner, and sheet titles when the question is technical. <em>“A 4-story steel office building, SDC C, Site Class D”</em> gets the same answer as the real project name.<br/><strong>Use incognito</strong> (Item 1) for one-off sensitive questions.<br/><strong>Firm rollout belongs on a business plan.</strong> Team and Enterprise sit under commercial terms with admin control — that&#x27;s the answer for firm-wide use, not personal accounts holding firm data.<br/><strong>Don&#x27;t connect</strong> Claude to project SharePoint, client systems, or firm email without written approval.</td><td id="gAI_" class="" style="width:607px"><strong>Helpful framing of Claude for Enigeering: </strong>Claude is a drafting and research assistant, not a basis of design and not a signatory. Its output has the same status as a textbook, a vendor design guide, or a junior engineer&#x27;s first pass — an input you check. Your seal means you exercised professional judgment over the result. Nothing about the tool changes who is in responsible charge.<br/><br/><strong>Questions to consider: </strong><em>If a plan reviewer asked how this number was produced, could you walk them through it without mentioning AI at all?</em> If not, you haven&#x27;t verified it yet.<br/><br/><em>Would you be comfortable if this chat transcript showed up as an exhibit?</em> That&#x27;s the real privacy test, and it&#x27;s stricter than any toggle.<br/><br/>⚠️ Remember that a lot of what you&#x27;d paste in isn&#x27;t yours: shop drawings, geotech reports, and mix designs belong to other parties with their own confidentiality expectations.</td></tr><tr id="3e4ee14a-f1cf-8064-9f69-df6e501cdd65" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>3. Turn On the Capabilities You&#x27;ll Need</strong></td><td id="ax&gt;T" class="" style="width:362px">1. <strong>Settings &gt; Capabilities &gt; “Code execution and file creation” &gt; ON.</strong> (Free/Pro/Max: on by default. Team/Enterprise: owner-controlled.)<br/><br/>2. <strong>Web search:</strong> click the <strong>+ to the left of the chat input box &gt; Web search.</strong> Team/Enterprise owners must first enable it under <strong>Organization settings &gt; Capabilities.</strong></td><td id="gAI_" class="" style="width:607px">Code execution + file creation is what lets Claude hand you a real <strong>.xlsx, .docx, .pptx, .pdf, or .png</strong> instead of a wall of text. It&#x27;s also required for Artifacts and Skills.<br/><br/><strong>Limits:</strong> 30 MB per file, up and down. Claude builds files in a sandbox, then gives you a download link (or saves to Google Drive if connected).<br/><br/><strong>Security note worth repeating to your team:</strong> anything Claude reads — a website, a PDF, a connected inbox — can contain instructions aimed at Claude. Watch what it does on tasks involving untrusted content and stop it if it starts reaching for data it shouldn&#x27;t.<br/><br/><em><strong><span style="border-bottom:0.05em solid">Free plan:</span></strong></em><em> web searches and file work count against a usage window that resets every 5 hours.</em></td></tr><tr id="3e4ee14a-f1cf-8092-a219-eba18c090943" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>4. Personalization &amp; Memory</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Account-wide instructions</strong><br/>1. <strong>Settings &gt; Account &gt; Instructions for Claude</strong> — how you want Claude to respond in every chat.<strong>Memory<br/></strong><br/>2. <strong>Settings &gt; Memory &gt; “Generate memory from chats”</strong> (on by default for Free/Pro/Max; <strong>off</strong> by default for Team/Enterprise). You can <strong>pause</strong> memory (keeps what exists, stops adding) or <strong>reset</strong> it (permanent).<br/><br/>3. <strong>Settings &gt; Memory</strong> also lists every saved topic — read, edit, or delete them individually.<br/><br/>4. <em><strong>Paid plan:</strong></em> <strong>Settings &gt; Memory &gt; “Search and reference chats”</strong> lets Claude pull context from your past conversations.</td><td id="gAI_" class="" style="width:607px">Example account instructions: <em>G</em><em><mark class="highlight-blue" data-notion-highlight="blue">et right to the point. Take a forward-thinking view. Be practical above all. Flag assumptions explicitly. Don&#x27;t invent code section numbers.<br/><br/></mark></em><strong>Memory vs. chat search.</strong> Memory = categorized topics Claude saves as you work (your role, tools, preferences, ongoing projects). Chat search = Claude looking back through old conversations on demand. They&#x27;re separate toggles.<br/><br/><strong>Memory is scoped.</strong> Each Project keeps its own memory, separate from your non-project chats — so your personal  work doesn&#x27;t bleed into your structural role.<br/>You can steer it directly: <em><mark class="highlight-blue" data-notion-highlight="blue">“Remember that our office standard is ASCE 7-22 and AISC 360-22 unless a project says otherwise.”<br/></mark></em><br/>Claude deliberately excludes sensitive categories (health, religion, politics, ID and financial account numbers) from memory.  <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Memory &amp; chat search</a></td></tr><tr id="3e4ee14a-f1cf-80e5-93c8-f1dc6ddb425a" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>5. Prompting Techniques &amp; Your Profile Prompt</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Have Claude help you build a reusable Profile Prompt, then park it in a Project (Item 6) so you never paste it again. Try this prompt:<br/><br/></strong><em>Help me build a Profile Prompt I can use as Project instructions in Claude. Ask me clarifying questions one group at a time, then give me the finished block in plain text I can paste. Start from this draft:<br/><br/>&lt;role_and_scope&gt;<br/>I am a Project Structural Engineer. Tools: Microsoft 365, Revit, RISA, Enercalc, SharePoint/Drive, Grasshopper. Typical deliverables: calculations, RFIs, submittal logs, meeting minutes to action logs, options matrices, QA checklists.<br/>&lt;/role_and_scope&gt;<br/><br/>&lt;approach_and_tone&gt;<br/>Answer concisely without dropping critical details. Prefer tables for lists. Mark assumptions as [TBD: what]. Quote source and section IDs verbatim when I paste excerpts. Offer 1–2 alternative approaches when relevant.<br/>&lt;/approach_and_tone&gt;<br/><br/>&lt;citations&gt;<br/>Cite building codes and standards (IBC, ASCE 7, ACI, AISC, NDS), peer-reviewed or recognized engineering publications, and files I provide. If a source isn&#x27;t definitive, label it commentary rather than fact. Never invent a section number — if you don&#x27;t have the text, say so.<br/>&lt;/citations&gt;<br/><br/>&lt;limits&gt;<br/>You are not a licensed engineer and won&#x27;t stamp or sign anything. No client-confidential information. For high-risk tasks (code compliance, sealed documents), return a checklist or QA plan instead of a final decision. Note when an answer is jurisdiction-specific.<br/>&lt;/limits&gt;<br/><br/>&lt;response_examples&gt;<br/>Confident: &quot;ASCE 7-22 Table 12.2-1 classifies this as SDC C for Site Class D.&quot;<br/>Cautious: &quot;Literature suggests this is common practice, but I couldn&#x27;t confirm a definitive code requirement. Want me to research it?&quot;<br/>&lt;/response_examples&gt;</em></td><td id="gAI_" class="" style="width:607px"><strong>Why the tags.</strong> Claude is specifically trained to respect XML-style tags as section boundaries. They keep your standing context from getting blended into the day&#x27;s question. Plain headers work too — tags just work better.<br/><br/><strong>Four moves that do most of the work with Claude:</strong><br/>1. <strong>Be clear and direct</strong> — state the output, audience, format, and length.<br/>2. <strong>Give an example</strong> — paste one RFI response or calc header you&#x27;d be happy to receive.<br/>3. <strong>Ask for reasoning</strong> — <em><mark class="highlight-blue" data-notion-highlight="blue">“think it through step by step before answering.”</mark></em><br/>4. <strong>Set the uncertainty rule</strong> — <em><mark class="highlight-blue" data-notion-highlight="blue">“say you don&#x27;t know rather than guessing.”<br/><br/></mark></em><strong>Iterate instead of restarting.</strong> <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">That&#x27;s close. Keep the structure, tighten it to 200 words, and move the assumptions to a bulleted list at the top.”<br/></mark></em><em><br/></em><strong>Watch for sycophancy.</strong> If you want a real review, ask for one: <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">Argue against this approach. What would a peer reviewer flag first?”</mark></em><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Prompt engineering guide</a></td></tr><tr id="3e4ee14a-f1cf-80b4-bc88-dd0ce5004ae0" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>6. Projects</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Create one home for your structural engineering work.</strong><br/>Go to <strong>claude.ai/projects &gt; + New project</strong><br/>&gt; Name it “Structural Engineering Assistant” (the name and description are for you — Claude doesn&#x27;t read them)<br/><br/>&gt; <strong>Click “Set project instructions” &gt; paste your Profile Prompt from Item 5 &gt; Save<br/></strong><br/>&gt; <strong>Add knowledge:</strong> in the project knowledge panel on the right, click <strong>+</strong> to upload office standards, a sample calc set, your QA checklist, a spec section<br/>&gt; Start every related chat from inside the project<br/><br/>[<em>Free plan]: 5 projects maximum. Paid plans get more.</em></td><td id="gAI_" class="" style="width:607px"><strong>Projects keep instructions, files, and memory together.</strong> Every chat inside the project inherits the instructions and the uploaded knowledge, and the project keeps its own memory separate from your other chats.<br/><br/><em>Help me write project instructions for a structural engineering assistant. Walk me through it one question at a time, then give me the final block.<br/><br/></em><strong>Good project splits for an engineer:</strong><br/>Structural Engineering Assistant (day-to-day design + code questions)<br/>A project per active building project (CA phase: RFIs, submittals, minutes)<br/>Research &amp; Writing (papers, presentations, standards tracking)<br/>Admin (board work, emails, scheduling)<br/><br/>When project knowledge gets large, Claude automatically switches to retrieval mode rather than truncating — so a full spec section is fair game.<a href="https://support.claude.com/en/articles/9517075-what-are-projects">What are projects?</a></td></tr><tr id="3e4ee14a-f1cf-8069-8ec4-cf68e8e8bcab" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>7. Models, Effort &amp; Thinking</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Change the model.</strong> Click the <strong>model name next to the send button &gt; pick a model &gt; “More models”</strong> for the full list.<br/><br/><strong>Change the effort.</strong> Same menu: <strong>Low / Medium / High / Extra high / Max.</strong> Effort controls how much work Claude puts into the answer.<br/><br/><strong>Thinking.</strong> A separate toggle in the same menu. When on, Claude shows an expandable block of its reasoning before the answer.<br/><br/><em>Available models vary by plan; free accounts see a shorter list.</em></td><td id="gAI_" class="" style="width:607px"><strong>The current lineup (Sept 2026):<br/>Claude Opus 5.5</strong> — the default workhorse for long, multi-step work.<br/><strong>Claude Fable 5.1</strong> — hardest reasoning and long-horizon agentic runs.<br/><strong>Claude Sonnet 5</strong> — best balance of speed and intelligence.<br/><strong>Claude Haiku 4.5</strong> — fastest, for quick lookups and reformatting.<br/><strong>Effort, in engineering terms:<br/>Low/Medium</strong> — unit conversions, reformatting a submittal log, tidying meeting notes.<br/><br/><strong>High</strong> — the best overall balance; use it for design checks and code questions. <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">Check whether a W18x35 at a 30 ft span meets L/360 live load deflection for a typical office floor. Show the formula, the assumptions, and flag anything I need to verify.”<br/><br/></mark></em><strong>Extra high / Max</strong> — system comparisons and multi-variable studies. <em><mark class="highlight-blue" data-notion-highlight="blue">“Evaluate steel moment frames vs. concrete shear walls for a 4-story office with large window openings. Consider stiffness, drift, connection complexity, foundation impact, and cost. Give me a comparison table plus a recommendation with the conditions that would change it.”<br/><br/></mark></em><strong>Note:</strong> thinking can&#x27;t be turned off on Opus 5.5, Fable 5.1, or Opus 5 — those models reason before answering by design.<a href="https://support.claude.com/en/articles/8664678-change-the-model-effort-and-thinking-settings">Model, effort &amp; thinking settings</a></td></tr><tr id="3e4ee14a-f1cf-806f-87fc-f0470264d40b" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>8. Reading Drawings, Specs, Submittals &amp; Photos</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>The high value daily use task<br/><br/>Upload:</strong> click the <strong>+ to the left of the chat input box &gt; Add files or photos</strong>, drag files into the chat window, or paste a screenshot straight from your clipboard.<br/><br/><strong>Limits that matter:</strong> up to <strong>20 files per chat</strong>, 500 MB each, PDFs up to <strong>1000 pages</strong>. Claude reads <strong>both text and visuals</strong> — drawings, details, charts — on PDFs of <strong>100 pages or fewer</strong>. Past 100 pages it&#x27;s text only, so split a drawing set down to the sheets you actually care about.<br/><br/><strong>Project knowledge is different:</strong> 30 MB per file, unlimited files, text extraction only for most formats. So park specs and office standards in Project knowledge (Item 6), and upload drawings into the chat itself.<br/><br/></td><td id="gAI_" class="" style="width:607px"><strong>Try it on something real:<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Here&#x27;s the structural drawing and the shop drawing for the same connection. List every difference you can find. Flag anything you can&#x27;t read clearly instead of guessing.<br/><br/>Read this spec section and build me a submittal log: spec section, item, submittal type, responsible party. Quote the paragraph number verbatim for every row.<br/><br/>This is a photo of a field condition. Describe what you see, list what a structural engineer should check, and tell me what additional photos or dimensions you&#x27;d need before saying anything definitive.</mark></em><mark class="highlight-blue" data-notion-highlight="blue"><strong><br/></strong></mark><strong><br/>Genuinely good at:</strong> pulling schedules and tables out of PDFs, turning a spec section into a checklist, comparing two documents for differences, transcribing a marked-up sketch or your own handwriting, and reading a screenshot of an error or a program output.<br/><br/><strong>Cannot do, no matter how confident it sounds:Scale anything.</strong> It cannot measure a dimension off a drawing. If the dimension isn&#x27;t printed, it doesn&#x27;t exist.<br/><strong>See what&#x27;s cropped.</strong> A callout running off the edge gets quietly completed. Tell it to flag anything partially visible.<br/><strong>Read bad scans reliably.</strong> Vector PDFs out of Revit read well; a 200-dpi scan of a 1970s drawing is a coin flip.<br/><br/><strong>The prompt that changes the hit rate:<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Quote the text verbatim and give me the sheet and detail number for each item. If something is illegible, cropped, or ambiguous, list it under “Could not read” instead of interpreting it.<br/><br/></mark></em><strong>For a full set:</strong> don&#x27;t dump 40 sheets in. Upload the three that matter, or hand the folder to Cowork (Item 16) and let it work sheet by sheet.<br/><br/><a href="https://support.claude.com/en/articles/8241126-upload-files-to-claude">Upload files to Claude</a></td></tr><tr id="3e4ee14a-f1cf-80f9-ae6b-e22e75c69497" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>9. Brainstorm: Build Your AI Roadmap</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Run this inside your project so Claude has your role and standards already.</strong><br/><br/>Ask for the ideas, then open a <strong>new chat in the same project</strong> for each idea you want to chase — it inherits the instructions and project memory, so you don&#x27;t re-explain yourself.<br/><br/><strong>Then lock in the result:</strong> <em>“Save the top 5 tasks to memory so you can pick this up in future chats.”</em></td><td id="gAI_" class="" style="width:607px"><strong>Prompt Example<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">I want to build a personalized AI automation roadmap that identifies where Claude can save me time and improve quality in my daily work.<br/><br/>Task sequence:<br/>1. Generate 50 ideas for how Claude could support me across design, documentation, and administration, based on my role.<br/>2. Ask me clarifying questions about my workflows, tools, team structure, and time sinks — 10 questions or fewer, grouped by category.<br/>3. Cluster the 50 ideas into 10 high-value tasks grouped under Design / Documentation / Admin.<br/>4. Ask follow-up questions about those 10 so I can describe each workflow in detail (tools, deliverable type, pain points, triggers).<br/>5. Estimate time saved per task, then calculate annual hours saved for the top 5.<br/>6. Present the top 5 in a table with these columns: Task (verb + object), Deliverable Type, Trigger, Inputs, Output Format, Weekly Frequency, Minutes per Occurrence, Pain Point, AI Pattern (draft / summarize / extract / transform / table / QA), AI Minutes per Occurrence, Notes.<br/><br/>Formatting: bold headers for each step, consistent time units (minutes and hours/year), engineering and productivity language. End with a short paragraph recommending which one workflow to pilot first and why.<br/><br/>Optional parameters: Focus area [Structural Engineering / Digital Practice / AI Research / Education]. Tools [Revit, RISA, Excel, Outlook, OneNote]. Goal [Save time / Improve QA / Standardize workflows / Build training examples].</mark></em></td></tr><tr id="3e4ee14a-f1cf-80e3-a227-ca4fcbf75c3a" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>10. Engineering Research</strong></td><td id="ax&gt;T" class="" style="width:362px"><em><strong>[Paid plan (Pro, Max, Team, Enterprise)]<br/><br/></strong></em><strong>Click the + to the left of the chat input box &gt; Research.</strong> A blue indicator appears at the bottom of the chat; click it again to turn it off.<br/><br/><strong>Web search must be on</strong> for Research to work (Item 3).<br/><br/>Research runs many searches, follows leads, and returns a cited report.It can take several minutes — start a new chat in another tab while it runs, and expect it to use your limits faster than a normal chat.<br/><br/>[<em>Free plan]: no Research mode, but web search still works. Just say </em><em><mark class="highlight-blue" data-notion-highlight="blue">“search the web and cite your sources” in the prompt.</mark></em></td><td id="gAI_" class="" style="width:607px"><strong>Research works best when you:</strong><br/>1. Are exploring an unfamiliar topic or need academic rigor<br/>2. Want citations, data, or a formal summary<br/>3. Are asking “what&#x27;s out there” or “what&#x27;s proven”<br/><br/>✅ <strong>Best practices:</strong><br/>Start with a <strong>verb</strong>: <em><mark class="highlight-blue" data-notion-highlight="blue">Summarize, Compare, Review, Analyze, Evaluate.</mark></em><br/>Specify <strong>scope</strong> — “for steel structures,” “since 2015,” “US practice only.”<br/>Add <strong>depth</strong> — “include quantitative data, standards, and citations.”<br/><br/><strong>Tip:</strong> before running it, ask Claude to write the research brief with you: <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">Draft a research prompt for this topic. Tell me what scope decisions I need to make first.”<br/></mark></em><br/>Examples:<br/><em><mark class="highlight-blue" data-notion-highlight="blue">Evaluate the experimental validation of composite beam vibration models since 2015, highlighting differences between Eurocode and AISC approaches. Include quantitative data and citations.<br/><br/>Summarize quantitative methods for optimizing structural systems for disassembly and material reuse — which metrics are most predictive of true circularity?</mark></em><em><br/></em><br/>⚠️ <strong>Engineer&#x27;s caveat:</strong> citations get you to the source faster, they don&#x27;t replace reading it. Verify every code section against the actual standard before it lands in anything sealed.</td></tr><tr id="3e4ee14a-f1cf-80e5-a7d0-ffb031c86296" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>11. Connectors &amp; MCP</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Connect Claude to the systems where your work actually lives.<br/><br/>From a chat:</strong> click the <strong>+ to the left of the chat input box (or type “/”) &gt; Connectors &gt; Manage connectors &gt; + &gt; browse the directory &gt; authenticate.<br/><br/>From settings:</strong> <strong>Settings &gt; Customize &gt; Connectors &gt; +<br/></strong><br/>Once connected, Claude suggests relevant connectors on its own. Each connector has a <strong>tool access mode</strong> — <em>Auto</em> (default) or <em>On demand</em>.<br/><br/><strong>Team/Enterprise:</strong> an owner enables connectors org-wide first, and can restrict them to read-only. Each person still authenticates individually.<br/><br/><strong>Advanced:</strong> build your own <strong>custom connector with remote MCP</strong> — this is the door to Revit, RISA, Bluebeam, and internal database workflows.</td><td id="gAI_" class="" style="width:607px"><em><mark class="highlight-red" data-notion-highlight="red"><strong>Use with caution — start with your personal workspace so you understand exactly what you&#x27;re handing over.</strong></mark></em><mark class="highlight-red" data-notion-highlight="red"> </mark>Claude can only reach content you already have permission to see, and connected services process data on their own infrastructure. On Team/Enterprise, ask your admin what&#x27;s approved before connecting anything client-related.<br/><br/><strong>Common ones:</strong> Google Drive, Gmail, Calendar, Microsoft 365 (SharePoint, OneDrive, Outlook), Slack, Asana, Box, Figma.<br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">Find the top 50 senders I could unsubscribe from. Give me ready-made Gmail search filters so I can find, delete, and unsubscribe.<br/><br/>Pull the structural section of the spec from SharePoint and build me a submittal log with spec section, item, and action required.<br/><br/>Read this week&#x27;s meeting invites and draft an agenda for the Thursday coordination call based on the open RFIs in my inbox.<br/></mark></em><br/>⚠️ Connected content can carry instructions aimed at Claude. Review what it does before approving writes.<br/><br/><a href="https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities">Use connectors</a> · <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp">Custom MCP connectors</a></td></tr><tr id="3e4ee14a-f1cf-8017-862d-e0ff77a41858" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>12. Tables, Spreadsheets &amp; Calc Workbooks</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Tables in chat — just ask, and define the columns.</strong><em><mark class="highlight-blue" data-notion-highlight="blue">Create a table of wide-flange shapes with a moment of inertia between 1400 and 1600 in⁴. Columns: shape, Ix, Zx, weight per foot. Sort lightest first. Use the AISC v16.0 shapes database and tell me if you can&#x27;t confirm a value.<br/><br/></mark></em><strong>A real workbook — requires “Code execution and file creation” (Item 3). Try this prompt:<br/></strong><mark class="highlight-blue" data-notion-highlight="blue"><strong><br/></strong></mark><em><mark class="highlight-blue" data-notion-highlight="blue">Act as a structural engineering assistant. Create an Excel workbook titled “Uniformly Distributed Simply Supported Beam” with two sheets.<br/><br/>Sheet 1: Inputs. Collect and label with units: w = uniform load (k/ft), L = span length (ft), x = distance from left support (ft), E = modulus of elasticity (ksi), I = moment of inertia (in⁴). Bold headers, one variable per row (Variable, Description, Units, Input cell), light shading on input cells, readable column widths.<br/><br/>Sheet 2: Calculations. Every formula must be a live Excel formula referencing the Inputs sheet (e.g. =Inputs!B2), not a hard-coded value, so results update when inputs change. Compute: reaction R = wL/2; shear Vx = w(L/2 − x); max moment Mmax = wL²/8; moment Mx = wx(L − x)/2; max deflection Δmax = 5wL⁴/(384EI); deflection Δx = wx(L³ − 2Lx² + x³)/(24EI). Watch your units — E is in ksi and I in in⁴, so convert consistently and show the conversion in the sheet.<br/><br/>Label every result, use borders and bold labels, 3 decimal places. Add a note at the bottom citing Roark&#x27;s Formulas for Stress and Strain and Hibbeler&#x27;s Mechanics of Materials. Then list what you built in a table: Quantity, Formula, Excel Formula, Result, Units</mark></em><em>.</em></td><td id="gAI_" class="" style="width:607px"><strong>Say “live formulas,” not “calculate.”</strong> Left alone, an AI will happily hand you a sheet of frozen numbers. The phrase that fixes it: <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">every calculation must be an Excel formula referencing the Inputs sheet, not a pasted value.”</mark></em><em><br/><br/></em><strong>Pro tip — don&#x27;t type equations.</strong> Snip the formula or the shear/moment diagram from your reference and paste the image into the chat: <em><mark class="highlight-blue" data-notion-highlight="blue">“Use the attached image for all formulas. Don&#x27;t search the web for them. Build the workbook titled Uniformly Distributed Simply Supported Beam.”</mark></em><mark class="highlight-blue" data-notion-highlight="blue"> </mark>Claude reads images well, which also makes it good at troubleshooting a screenshot of an error.<br/><br/><strong>Or make it validate first:</strong> <em><mark class="highlight-blue" data-notion-highlight="blue">“Find the equations for shear, moment, and deflection for a simply supported beam under uniform load. Use reputable sources, show me the equations and where they came from, and wait for me to confirm before building the spreadsheet.”<br/><br/></mark></em><strong>Always ask for the audit:</strong> <em>“</em><em><mark class="highlight-blue" data-notion-highlight="blue">List every assumption you made and every place a unit conversion could be wrong.”</mark></em><mark class="highlight-blue" data-notion-highlight="blue"> </mark>Then spot-check one row against a hand calc before anyone else sees it.<br/><br/><a href="https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude">Create and edit files</a></td></tr><tr id="3e4ee14a-f1cf-80b5-84f7-d9c8c90a8457" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>13. How Claude Fails — and How You Catch It</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Teach the failure modes by name. “Verify the output” changes nobody&#x27;s behavior; knowing what the failure looks like does.<br/><br/>The five that matter in structural work:</strong><br/>1. <strong>Invented or transposed citations.</strong> A section number that looks right and isn&#x27;t — the most checkable failure and the least checked.<br/>2. <strong>Plausible table values.</strong> A Zx, an R value, a seismic coefficient recalled rather than looked up.<br/>3. <strong>Silent unit errors.</strong> ksi vs. ksf, in⁴ vs. ft⁴, kips vs. pounds. The tone stays confident while the magnitude goes sideways.<br/>4. <strong>Code edition drift.</strong> Claude&#x27;s training has a cutoff date and it doesn&#x27;t know your jurisdiction&#x27;s amendments. Ask which edition it&#x27;s working from, and tell it which one you&#x27;re on.<br/>5. <strong>Agreeableness.</strong> Push back on a correct answer and it may fold. Its agreement is not evidence.<br/><br/><strong>The highest-value fix:<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Use the code tool for every calculation and show me the code.</mark></em><br/><br/>Left alone, Claude does arithmetic by reasoning through it token by token. Told to compute in code, it runs actual Python — deterministic, inspectable, and it shows the work. Requires code execution (Item 3).</td><td id="gAI_" class="" style="width:607px"><strong>Make QA a prompt pattern, not a disclaimer.</strong> These four, in this order, catch most of it:<br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">Now solve it again using a different method and tell me where the two disagree.<br/><br/>What would have to be true for this answer to be wrong? List the assumptions that would break it.<br/><br/>Act as the reviewer trying to reject this submittal. What do you flag first?<br/><br/>Go back through your answer and mark every number as [calculated], [from the source I gave you], or [from memory].</mark></em> — that last category is your verification list.<br/><br/><strong>Constrain the source.</strong> For code questions, paste the actual provision and add: <em>Use only the text I pasted. If the answer isn&#x27;t in it, say so rather than filling the gap.</em> This turns the most dangerous failure into a visible refusal.<br/><br/><strong>Context hygiene.</strong> Long chats drift and early details go fuzzy. When a thread has wandered: <em>Summarize everything we&#x27;ve settled, including assumptions, so I can start a clean chat.</em> Paste that into a new chat in the same project.<br/><br/><mark class="highlight-red" data-notion-highlight="red">None of this makes Claude reliable. Independent verification by a qualified person is still the check. Claude&#x27;s job is to get the draft to that review in better shape — and, now and then, to catch what the human missed.</mark></td></tr><tr id="3e4ee14a-f1cf-807f-803f-d52d58594934" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>14. Artifacts &amp; Custom Visuals</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Artifacts</strong> are the things Claude builds that you&#x27;d put in front of someone — a document, a dashboard, a working tool. Claude creates them automatically for substantial output; you can also ask: <em><mark class="highlight-blue" data-notion-highlight="blue">“make this an artifact.”</mark></em> Open it in the side panel, iterate, then <strong>publish and share it with a link.<br/><br/>Custom visuals (beta, all plans, web and desktop):</strong> ask for a picture in plain language — <em>“draw this as a diagram,”</em> <em>“chart this data.”</em> Claude builds it in HTML, so it&#x27;s interactive, not a flat image. Save it as an artifact if you want to keep it.<br/><br/>[<em><strong>Paid plan:]</strong></em> <strong>Claude Docs</strong> (living documents you and Claude edit together, with comments and live charts), <strong>Claude Slides</strong> (decks), <strong>Claude Design</strong> (mockups and visuals). Find them in the artifacts tab or just ask.</td><td id="gAI_" class="" style="width:607px"><strong>What Claude does not do:</strong> photorealistic images or video. There&#x27;s no image generator and no Sora equivalent. For renderings, keep using your visualization tools — Claude&#x27;s strength is diagrams, charts, and interactive tools built from code.<br/><br/><strong>Worth building:<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Build me an interactive tool where I can slide span, load, and beam size and see moment, shear, and deflection update, with the L/360 limit marked.<br/><br/>Draw the load path for a 4-story steel building with a rooftop mechanical screenwall, from screenwall to foundation, as a diagram I can drop in a presentation.<br/><br/>Here&#x27;s a RISA output. Build a dashboard showing DCR by member group, flagging anything over 0.95.<br/><br/>Turn these meeting notes into a one-page action log with owner and due date, as a document I can share.</mark></em><em><br/></em><a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">Artifacts</a> · <a href="https://support.claude.com/en/articles/13979539-custom-visuals-in-chat-and-cowork">Custom visuals</a></td></tr><tr id="3e4ee14a-f1cf-80f2-b57f-d90740681d66" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>15. Skills — Teach Claude Your Standards</strong></td><td id="ax&gt;T" class="" style="width:362px"><strong>Skills are the “custom GPT” equivalent, except Claude loads them automatically when they&#x27;re relevant.<br/><br/>Browse and enable:</strong> <strong>Settings &gt; Customize &gt; Skills &gt; + &gt; Browse skills.Built-in skills</strong> for Excel, Word, PowerPoint, and PDF load on their own whenever you ask for one of those files — nothing to turn on.<br/><br/><strong>Build your own:</strong> a folder containing a <strong>SKILL.md</strong> file with a name (≤64 characters) and a description (≤200 characters) in the frontmatter, plus your instructions in markdown. Optionally add reference files and Python or JavaScript scripts. Zip the folder and upload it.<br/><br/>[<em><strong>Paid plan], Claude for Mac:</strong></em> in Cowork, click <strong>+ in the composer &gt; “Record a skill,”</strong> narrate yourself doing the task once, and let Claude write the skill from what it observes.<br/><br/><em>Requires code execution to be enabled (Item 3).</em></td><td id="gAI_" class="" style="width:607px"><strong>The description field is the whole ballgame.</strong> It&#x27;s how Claude decides when to use the skill, so write it as a trigger: <br/><em><mark class="highlight-blue" data-notion-highlight="blue">“Use when building a structural calculation workbook or formatting calc sheets to the office standard.”<br/></mark></em><em><br/></em><strong>Skills worth building at a structural firm:</strong><br/>Office calc sheet standard — tab structure, headers, code citations, DCR formatting, verification pass<br/>RFI response format — the tone and structure your PM actually wants<br/>Submittal review checklist — what to check, in what order, with the standard stamp language<br/>Meeting minutes to action log — your format, every time<br/>Spec section review — how your office marks up Division 05<br/>Skills also carry into the Microsoft 365 add-ins, so the same standard applies whether you&#x27;re in Claude or in Excel.<br/><br/><a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are skills?</a> · <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Create custom skills</a></td></tr><tr id="3e4ee14a-f1cf-808c-8f11-dc6de0ffbdca" dir="ltr"><td id="Lbvs" class="" style="width:138px"><strong>16. Go Agentic: Cowork &amp; Claude Code</strong></td><td id="ax&gt;T" class="" style="width:362px"><em><strong>[Paid plan] <br/><br/></strong></em><strong>Cowork</strong> is Claude working on a task instead of answering a question: describe the outcome, walk away, come back to finished files. Available on desktop, web, mobile, and the Chrome side panel — choose <strong>Cowork</strong> in the message box, or just describe a multi-step task.<br/><br/>On <strong>Claude for Mac/Windows</strong> you can connect a <strong>local folder</strong> so Claude reads and writes files directly instead of you uploading and downloading. Tasks run on Anthropic&#x27;s servers, so they keep going after you close the laptop.<br/><br/><strong>Claude Code</strong> is the terminal version for scripts, macros, Grasshopper/Python, and repositories. The same account, the same skills.</td><td id="gAI_" class="" style="width:607px"><strong>VBA example — batch your beam spreadsheet:<br/></strong><em>Create a VBA script for my Excel file to batch process multiple entries through the beam workbook. Inputs live in the &quot;Inputs&quot; worksheet, D2:D6 (w, L, x, E, I). Outputs live in the &quot;Calculations&quot; worksheet, D2:D7 (R, Vx, Mmax, Mx, deltaMax, deltaX). The &quot;Summary&quot; worksheet has rows of inputs and empty output columns. For each data row in Summary, write the 5 inputs into Inputs!D2:D6, recalculate the workbook, then write the 6 outputs from Calculations!D2:D7 back into that row. Handle blank rows, and tell me how to install and run it.<br/><br/></em><strong>Cowork examples:<br/></strong><em>Here&#x27;s a folder of concrete mix design submittals. Build me a comparison table with mix ID, strength and age, SCM percentage, and GWP per cubic yard, and flag which ones meet a 300 kg CO₂e/yd³ target.<br/><br/>Take this folder of meeting minutes and produce one running action log, sorted by owner, with anything overdue at the top.<br/><br/></em><a href="https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork">Get started with Cowork</a></td></tr></tbody></table><h3 id="3e4ee14a-f1cf-807d-8b4f-fe25c7d0637a" class="" dir="auto">Other Features</h3><table id="3e4ee14a-f1cf-803b-a6ef-f28d537e9da7" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="3e4ee14a-f1cf-8054-ab30-febcfe7f0773" dir="ltr"><th id="gXC?" class="simple-table-header-color simple-table-header" style="width:137px"><strong>Agenda Item</strong></th><th id="qRU_" class="simple-table-header-color simple-table-header" style="width:360px"><strong>Instructions</strong></th><th id="___z" class="simple-table-header-color simple-table-header" style="width:611px"><strong>Comments &amp; Examples</strong></th></tr></thead><tbody><tr id="3e4ee14a-f1cf-804d-8c08-caeee81ea441" dir="ltr"><td id="gXC?" class="" style="width:137px"><strong>1. Learn From a Worked Example</strong></td><td id="qRU_" class="" style="width:360px">There&#x27;s no separate “study mode” on personal or business plans — you build it with instructions, which means you can make it act like the reviewer you actually had.<br/><br/><strong>Upload a design example, homework problem, or an old calc set, then set the rules:</strong></td><td id="___z" class="" style="width:611px"><em><mark class="highlight-blue" data-notion-highlight="blue">Walk me through this spread footing design one step at a time. Don&#x27;t give me the next step until I answer. Ask me what I&#x27;d check first, tell me if I&#x27;m wrong and why, and cite the ACI section behind each check.<br/><br/>I&#x27;m reviewing this calc set from a junior engineer. Don&#x27;t tell me what&#x27;s wrong — ask me questions that would lead me to find it myself.</mark></em><em><br/></em><br/>Make it permanent by saving it as a Skill (Item 15) named something like “Socratic tutor.”<br/><br/><em>Claude for Education includes a dedicated learning mode for universities on that plan.</em></td></tr><tr id="3e4ee14a-f1cf-80dc-90ec-f733c2faef34" dir="ltr"><td id="gXC?" class="" style="width:137px"><strong>2. Claude in Chrome</strong></td><td id="qRU_" class="" style="width:360px"><em><strong>Paid plan (Pro, Max, Team, Enterprise).</strong></em> Chrome only, desktop only.<br/><br/><strong>Chrome Web Store &gt; Add to Chrome &gt; sign in with your Claude account &gt; grant permissions.</strong><br/><br/>Claude can then read pages, click, fill forms, work across tabs, read console errors, and run scheduled browser tasks in a side panel next to whatever you&#x27;re doing.</td><td id="___z" class="" style="width:611px">Useful for the tedious web work: pulling product data off manufacturer sites into a table, filling out a permit or certification form from a document you hand it, comparing three code adoption pages side by side.<br/><br/>⚠️ <strong>Treat browser permissions like site access, not a toy.</strong> Grant it per site, watch it on anything involving a login, and don&#x27;t point it at client portals without checking your firm&#x27;s policy first.<br/><br/><a href="https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome">Get started with Claude in Chrome</a></td></tr><tr id="3e4ee14a-f1cf-80fe-93b5-f46b3eee381a" dir="ltr"><td id="gXC?" class="" style="width:137px"><strong>3. Claude in Excel, Word, PowerPoint &amp; Outlook</strong></td><td id="qRU_" class="" style="width:360px"><em><strong>[Paid plan (Pro, Max, Team, Enterprise).]<br/></strong></em><br/>Install each <strong>Claude for M365 add-in from Microsoft AppSource</strong>, then open each app and activate the add-in once.<br/><br/><strong>Work across apps:</strong> in each add-in, <strong>Settings &gt; “Let Claude work across files” &gt; ON</strong> (on by default for Pro/Max, off for Team/Enterprise; the toggle is per device).</td><td id="___z" class="" style="width:611px">Claude reads from one app and writes to another in a single conversation: pull numbers from an open Excel model into a Word memo, update a chart in PowerPoint from the latest spreadsheet figures, or open an attached LOI in Word with the Outlook thread already loaded as context.<br/><br/><strong>Limitation:</strong> Claude can only touch files that are <strong>currently open</strong>. It can&#x27;t create, open, close, or switch files for you.<br/><br/>Your enabled Skills apply inside the add-ins too — so your calc sheet standard follows you into Excel.<br/><br/><a href="https://claude.com/docs/office-agents/work-across-apps">Work across M365 apps</a></td></tr><tr id="3e4ee14a-f1cf-80b6-a471-f10e6096ef1c" dir="ltr"><td id="gXC?" class="" style="width:137px"><strong>4. Claude Docs, Slides &amp; Design</strong></td><td id="qRU_" class="" style="width:360px"><em><strong>[Paid plan, beta.]<br/></strong></em><br/>Just ask — <em>“turn this into a doc,” “make this a deck,” “mock up a page for this”</em> — or start from the <strong>artifacts tab</strong> and pick a template.</td><td id="___z" class="" style="width:611px"><strong>Docs</strong> are living documents: you and Claude edit simultaneously, you can @mention Claude in a comment to ask for a change, and charts can pull from connected apps like Google Sheets.<strong>Slides</strong> builds decks; <strong>Design</strong> builds mockups and visuals against a design system you set up once (handy for keeping firm branding consistent).<em>Turn my Item 9 roadmap into a 10-slide deck for the leadership meeting: problem, five prioritized workflows, hours saved, pilot recommendation.</em></td></tr><tr id="3e4ee14a-f1cf-800d-af04-c3a856d6382a" dir="ltr"><td id="gXC?" class="" style="width:137px"><strong>5. Voice Mode</strong></td><td id="qRU_" class="" style="width:360px"><strong>Beta, all plans.</strong> Best on your phone.<br/><br/><strong>Mobile:</strong> tap the voice icon in the text input field and pick a voice.<br/><strong>Web/desktop:</strong> tap the sound wave icon in the lower right of the chat window.</td><td id="___z" class="" style="width:611px">Good for the drive home: think out loud about a design problem, dictate meeting notes into an action log, or ask questions against a project you&#x27;ve already set up.<br/><br/>Voice works with your connected tools and web search, and counts against your normal usage limits. <em>Claude Fable isn&#x27;t available in voice mode.<br/><br/></em><a href="https://support.claude.com/en/articles/11101966-use-voice-mode">Use voice mode</a></td></tr></tbody></table><h3 id="3e4ee14a-f1cf-80f0-ac0d-cf605181258e" class="" dir="auto">A Note for Engineers</h3><p id="3e4ee14a-f1cf-80c1-bcca-f2220e94d414" class="" dir="auto">Claude is a research, drafting, and QA assistant — not a licensed engineer. It won&#x27;t stamp anything, and neither should you on its say-so. The two habits that make it safe in practice:</p><ol type="1" id="3e4ee14a-f1cf-806b-a10d-ee7cc2cae6ce" class="numbered-list" start="1" dir="auto"><li><strong>Give it the source.</strong> Paste the actual code text, spec section, or output file rather than asking from memory. Then tell it: <em><mark class="highlight-blue" data-notion-highlight="blue">“Use only what I pasted. If it isn&#x27;t there, say so.”</mark></em></li></ol><ol type="1" id="3e4ee14a-f1cf-80a2-80f9-c168a636686f" class="numbered-list" start="2" dir="auto"><li><strong>Verify what matters.</strong> Every section number, every formula, every unit conversion that ends up in a deliverable gets checked against the original. Claude is good enough to be convincing when it&#x27;s wrong — which is exactly why the check is the job.</li></ol></div></details><details open="" class="" dir="auto"><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0"><h1 id="3e4ee14a-f1cf-8049-9c14-f7d60c2d7f5e" style="display:inline-block"><span style="border-bottom:0.05em solid">Supporting Content - ChatGPT</span></h1></summary><div class="indented"><h2 id="da5ee14a-f1cf-82b6-8f04-01b328803cf2" class="" dir="auto"><a href="https://chatgpt.com/"><span style="border-bottom:0.05em solid">Chat GPT</span></a><span style="border-bottom:0.05em solid"> Setup | Prompting | Examples</span></h2><ul id="924ee14a-f1cf-8332-b47a-0185abe5880c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">If you see <em><mark class="highlight-blue" data-notion-highlight="blue">blue text</mark></em><em> </em>below, those are example prompts you can copy and paste (or modify) into ChatGPT</li></ul><h3 id="847ee14a-f1cf-833b-99bc-01631f529c09" class="" dir="auto"><strong>Generic Prompt Recommendations</strong></h3><ul id="e94ee14a-f1cf-8338-a6c3-8112745b7d94" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><em>“Before starting, clarify any questions you might have and identify unclear items.”</em></li></ul><ul id="2b1ee14a-f1cf-839b-a693-810e2157808d" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><em>“Work on this problem step by step.”</em></li></ul><ul id="caaee14a-f1cf-82d0-8c0d-81743d613088" class="bulleted-list" dir="auto"><li style="list-style-type:disc">What’s the output you want? What are the variables to consider?</li></ul><ul id="90dee14a-f1cf-83e2-b050-016c5f319b0e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Are you looking for creativity or precise responses?</li></ul><ul id="c14ee14a-f1cf-83ba-815e-016ca6f14ef2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Here’s an example of a custom GPT for more customized prompts: <a href="https://chatgpt.com/g/g-hhh4w3eov-prompt-maker">https://chatgpt.com/g/g-hhh4w3eov-prompt-maker</a></li></ul><table id="0b7ee14a-f1cf-832b-a91b-8107b4550dba" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="35eee14a-f1cf-8360-8440-81f7f56d05e0" dir="ltr"><th id="Rx=&gt;" class="block-color-gray_background simple-table-header" style="width:210.33333333333334px"><strong>Agenda Item</strong></th><th id="oMVP" class="block-color-gray_background simple-table-header" style="width:484.3298645019531px"><strong>Instructions</strong></th><th id="ud|Q" class="block-color-gray_background simple-table-header" style="width:903.2986450195312px"><strong>Comments &amp; Examples</strong></th></tr></thead><tbody><tr id="157ee14a-f1cf-82d3-8abf-01f4ec27e4a8" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>1. Considering Privacy Controls</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Configure ChatGPT for safer data controls.<br/></strong>1. Your Initials/Profile &gt; Settings &gt; Data controls&gt; <strong>Improve model for everyone &gt; </strong><mark class="highlight-red" data-notion-highlight="red"><strong>OFF</strong></mark><mark class="highlight-default" data-notion-highlight="default"><strong>.</strong></mark><strong>  *this is turned ON by default<br/><br/></strong><br/><strong>Delete my data or Export data<br/></strong>2. Your Initials/Profile &gt; Settings &gt; Data controls &gt; Export data (and/or Delete all chats).<br/><br/><strong>Specific chats you don’t want in your chat history<br/></strong>3. Go to a new chat &gt; click the dashed circle in the top right of the screen  *this turns on an “incognito mode” so it won’t save your chat.</td><td id="ud|Q" class="" style="width:903.2986450195312px">When you share your content with us, it helps our models become more accurate and better at solving your specific problems and it also helps improve their general capabilities and safety. We don’t use your content to market our services or create advertising profiles of you—we use it to make our models more helpful. ChatGPT, for instance, improves by further training on the conversations people have with it, unless you <strong><a href="https://help.openai.com/en/articles/7730893-data-controls-faq">opt out</a></strong>.<br/><br/>Your account details and chats will be included in the export. The data will be sent to your registered email in a downloadable file. The download link will expire 24 hours after you receive it. Processing may take some time. You&#x27;ll be notified when it&#x27;s ready. To proceed, click &quot;Confirm export&quot; below.<br/><br/>This chat won&#x27;t appear in history, use or update ChatGPT&#x27;s memory, or be used to train our models. For safety purposes, we may keep a copy of this chat for up to 30 days.</td></tr><tr id="667ee14a-f1cf-83e9-98eb-8112da25a763" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>2. Customization &amp; Personalization</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Customize your profile<br/></strong>Your Initials/Profile &gt; Settings &gt; Personalization &gt; <strong>Custom Instructions</strong>.<br/><br/>2. Your Initials/Profile &gt; Settings &gt; Personalization &gt; <strong>Reference saved memories (make sure it’s turned on)</strong>. &amp; <strong>Reference chat history (turned on)</strong><br/><br/>3. Your Initials/Profile &gt; Settings &gt; Personalization &gt; <strong>Data controls &gt; Improve the model for everyone &gt; </strong><mark class="highlight-red" data-notion-highlight="red"><strong>OFF</strong></mark><mark class="highlight-default" data-notion-highlight="default"><strong>.<br/></strong></mark></td><td id="ud|Q" class="" style="width:903.2986450195312px">Example of custom instructions: <em>Get right to the point. Take a forward-thinking view. Be practical above all.</em><br/><br/><br/>ChatGPT will use both memories and chat history to inform and give context to responses. Memories = generic things you want it to remember about yourself. Chat History = all the random questions and chats you’ve had. Understand more about Memories &amp; Chat History here. <br/><a href="https://help.openai.com/en/articles/8590148-memory-faq">https://help.openai.com/en/articles/8590148-memory-faq</a></td></tr><tr id="2aeee14a-f1cf-8328-834e-8199b2271f21" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>3. Prompting Techniques &amp; Tips</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Have ChatGPT assist in creating instructions for your prompt. Context is important.  Create your own prompt profile to copy and paste at the start of each chat. Try this prompt: </strong><em><br/><br/><br/></em><em><mark class="highlight-blue" data-notion-highlight="blue">Help me create a Profile Prompt that I can copy into new chats. Here’s the template you can use and ask me clarifying questions to fill it out and make it better.</mark></em><em><mark class="highlight-blue" data-notion-highlight="blue"><strong><br/></strong></mark></em><mark class="highlight-blue" data-notion-highlight="blue"><br/></mark><em><mark class="highlight-blue" data-notion-highlight="blue">Role &amp; Scope<br/><br/>I am a Structural Engineer , mainly using &lt;Microsoft, Revit, RISA, Enercalc, SharePoint/Drive. Typical deliverables: Calculations, RFIs, submittal logs, minutes→action logs, options matrices, FF&amp;E tables, QA checklists.<br/><br/>Approach &amp; Tone<br/><br/>Answer concisely, but don’t omit critical details. Prefer tables for lists. Show assumptions as [TBD:&lt;what&gt;] and cite sources/section IDs verbatim when I paste excerpts. Offer 1–2 alternative approaches when relevant.<br/><br/><br/>Citation Guidelines<br/><br/>No client secrets. Don’t invent section numbers or facts. If the task is high-risk (code compliance, sealed docs), return a checklist/QA plan instead of a final decision. If a source isn’t definitive, I’ll label it as commentary rather than fact.<br/><br/>Limits &amp; Disclaimers<br/><br/>You are not a licensed engineer and won’t sign or stamp calculations. No client secrets. Don’t invent section numbers or facts. If the task is high-risk (code compliance, sealed docs), return a checklist/QA plan instead of a final decision.<br/><br/><br/>Example Responses<br/>Clear answer with confidence (e.g., “ASCE 7-22 Table 12.2-1 classifies this as Seismic Design Category C for Site Class D.”)<br/>Cautious answer when uncertain (e.g., “Literature suggests this approach is common, but I could not confirm a definitive code requirement. Would you like me to search for a case study?”)</mark></em><br/><br/></td><td id="ud|Q" class="" style="width:903.2986450195312px"><strong>Here is an example of my structural engineering project instructions. </strong><br/><br/>Role &amp; Scope<br/><br/>I will act as a professional structural engineer and engineering researcher, assisting you with:<br/>Conceptual design ideas<br/>Code references and interpretation (with sources)<br/>Researching unclear or emerging topics<br/>Drafting calculations, workflows, and technical notes<br/>Providing summaries of industry literature, standards, and reports<br/><br/>Approach &amp; Tone<br/><br/>Responses will be technical, precise, and appropriately cautious — avoiding unjustified certainty.<br/>When the answer is uncertain, dependent on assumptions, or requires engineering judgment, I will clearly state this.<br/>I will cite sources when referencing codes, research papers, or authoritative materials.<br/><br/>Citation Guidelines<br/><br/>Citations will come from:<br/>📚 Building codes &amp; standards (IBC, ASCE 7, ACI, AISC, CSA, etc.)<br/>🔍 Peer-reviewed articles, textbooks, or recognized engineering publications<br/>🗂️ User-provided files (drawings, reports, spreadsheets)<br/><br/>If a source isn’t definitive, I’ll label it as commentary rather than fact.<br/><br/>Limits &amp; Disclaimers<br/><br/>I won’t stamp or sign calculations — my input is for research and drafting purposes only.<br/>I will note if an answer is location-specific (e.g., seismic provisions vary by region).<br/>If something needs local building official interpretation or engineering seal, I’ll say so.<br/><br/>Example Responses<br/>✅ Clear answer with confidence (e.g., “ASCE 7-22 Table 12.2-1 classifies this as Seismic Design Category C for Site Class D.”)<br/>⚠️ Cautious answer when uncertain (e.g., “Literature suggests this approach is common, but I could not confirm a definitive code requirement. Would you like me to search for a case study?”)<br/></td></tr><tr id="b41ee14a-f1cf-824c-80d1-81fa1e0b0cf9" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>4. Projects &amp; Models</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><span style="border-bottom:0.05em solid">Projects</span><em><br/>If you’re not logged in - no memories or chat history<br/></em>Confirm your memories and project chat as shown in section 2. <em><br/></em><br/>Now that we have a profile created. <strong>Create a specific project for all your structural engineering tasks. <br/><br/>Under Projects &gt; Click New project<br/>&gt;Give it a name “Structural Engineering Assistant”  </strong>(or other)<strong><br/>&gt;Tap the smiley face on the left to give it an Icon<br/>&gt; Click the gear on the top right &gt; Memory &gt; Default </strong>(or you can use Project-only to keep memories specific to that project)<br/>&gt;Now that the project is created &gt; <strong>Click the top right ••• &gt; Select Instructions &gt; Paste your instructions from above. &gt; Click Save<br/>&gt; </strong>Add any relevent files you want ChatGPT to reference<strong> &gt; Click “Add files” </strong>on the chat bar page<br/><br/><span style="border-bottom:0.05em solid">Models<br/></span>Change the model. Try different models. (Or just keep on Auto)<br/><strong><br/>ChatGPT 5 Dropdown &gt; Pick a model or GPT &gt; Auto:<br/><br/>ChatGPT 5 Dropdown&gt; Pick a model or GPT &gt; Thinking:<br/></strong><br/><strong>ChatGPT 5 Dropdown&gt; Pick a model or GPT &gt; Instant:</strong><br/><br/><br/></td><td id="ud|Q" class="" style="width:903.2986450195312px"><mark class="highlight-default" data-notion-highlight="default"><strong><span style="border-bottom:0.05em solid">Projects</span></strong></mark><mark class="highlight-default" data-notion-highlight="default"><strong><br/></strong></mark><mark class="highlight-default" data-notion-highlight="default">Projects keep chats, files, and custom instructions in one place. Use them for ongoing work, or just to keep things tidy.</mark><em><mark class="highlight-default" data-notion-highlight="default"><br/></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">Help me write instructions for my new project. Walk me through it step-by-step. <br/></mark></em><em><mark class="highlight-default" data-notion-highlight="default"><br/></mark></em><mark class="highlight-default" data-notion-highlight="default"><strong><span style="border-bottom:0.05em solid">Understanding the models</span></strong></mark><em><mark class="highlight-blue" data-notion-highlight="blue"><br/>Give me an example on when to use Auto, Instant or Thinking models in chatGPT. Give me a real-world example relevant to structural engineering and walk me through how to best choose the model<br/></mark></em><em><br/></em><strong>⚙️ 1. Auto Mode — “General purpose and balance”<br/></strong>Use it when: you want ChatGPT to decide whether speed or depth is needed.<br/>It dynamically chooses between Instant or Thinking depending on the complexity of your question.<br/><span style="border-bottom:0.05em solid">Prompt: </span>“Check if W18×35 beams at 30 ft span meet L/360 deflection and typical office live load requirements.”<br/><span style="border-bottom:0.05em solid">Why Auto:</span> ChatGPT quickly recognizes it’s a moderately technical question.It may pull in some rough calculations or code references (Thinking-level depth if needed).You get a solid answer fast without choosing a mode. Best use: everyday engineering questions, design checks, and code clarifications.<br/><br/><strong>⚡ 2. Instant Mode — “Speed and summaries”<br/></strong>Use it when: you want fast answers, brainstorming, or summaries rather than in-depth reasoning.<br/><span style="border-bottom:0.05em solid">Prompt:</span> ”Summarize key structural coordination items I should bring up for a steel-framed office building with a rooftop mechanical screenwall.”<br/><span style="border-bottom:0.05em solid">Why Instant:</span> You’re not looking for formulas or deep reasoning. Instant is great for text generation, brainstorming, emails, or meeting prep. The output is quick, concise, and easy to edit on the fly.<br/><span style="border-bottom:0.05em solid">Best use:</span> Drafting emails or meeting notes Generating checklists Summarizing code references or design criteria<br/><br/><strong>🧠 3. Thinking Mode — “Deep analysis and multi-step reasoning”<br/></strong>Use it when: your question requires step-by-step logic, trade-off evaluation, or integrating multiple data points.<br/><span style="border-bottom:0.05em solid">Prompt: </span>“Help me evaluate whether to use steel moment frames or concrete shear walls for a 4-story office building with large window openings. Consider stiffness, drift, connection complexity, and cost.”<br/><span style="border-bottom:0.05em solid">Why Thinking: </span>The model can spend more time thinking through each factor.You’ll get a structured, engineer-like rationale (pros/cons, reasoning steps). It’s slower but far more analytical.<br/><span style="border-bottom:0.05em solid">Best use:</span> Concept design studies. System comparisons. Code interpretations requiring reasoning. Multi-variable optimizations or “what-if” studies</td></tr><tr id="e9dee14a-f1cf-835d-84ca-01754212f4ca" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px">5. Brainstorm uses for ChatGPT</td><td id="oMVP" class="" style="width:484.3298645019531px">It’s always helpful to dive in and leverage chatGPT for brainstorming. <strong>Determine the best use cases given your role as a structural engineer. (or other) See the example prompt ⇒<br/><br/><br/><br/>Branch one of your ideas into a new chat. </strong>&gt; Copy and paste one idea into the prompting input &gt; Click the three dots at the bottom of the chat “Branch into new chat”<br/></td><td id="ud|Q" class="" style="width:903.2986450195312px"><mark class="highlight-default" data-notion-highlight="default"><strong><span style="border-bottom:0.05em solid">Prompt Example</span></strong></mark><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid"><br/></span></mark><mark class="highlight-default" data-notion-highlight="default">Use the prompt below inside one of your projects. Rember to create instructions for the project to give it structural engineering context. If you don’t use a project, you can use the prompt below but paste in “Project Instructions” to give the role and scope of what you’re looking for.</mark><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid"><br/>System Role / Context</span></mark><em><br/></em><em><mark class="highlight-blue" data-notion-highlight="blue">I want to build a personalized AI automation roadmap that identifies where ChatGPT (and other AI tools) can save me time and improve quality in my daily work.</mark></em><mark class="highlight-blue" data-notion-highlight="blue"><br/><br/></mark><em><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid">Task Sequence<br/></span></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">Generate 50 ideas for how ChatGPT could support me — across design, documentation, and administration tasks — based on my role.<br/><br/>Ask clarifying questions to understand my workflows, tools, team structure, and time sinks (add this context to memory for future optimization).<br/><br/>Prioritize and cluster the 50 ideas into 10 high-value tasks, grouped under Design / Documentation / Admin.<br/><br/>Ask follow-up questions about these 10 tasks so I can describe each workflow in more detail (tools used, deliverable types, pain points, and triggers).<br/><br/>Based on my answers, estimate time saved per task, then calculate annual hours saved for the top 5 tasks.<br/><br/></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid">Present the Top 5 Tasks in a clear table with the following columns:<br/></span></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">| Task (Verb + Object) | Role | Deliverable Type | Trigger | Inputs | Output Format | Weekly Frequency | Minutes/Occurrence | Pain Point | AI Pattern (Draft / Summarize / Extract / Transform / Table / QA) | AI Tool (ChatGPT / Sheets / Outlook / etc.) | AI Minutes/Occurrence | Notes |<br/><br/></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid">Formatting / Style Requirements<br/></span></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">Use clear sections and bold headers for each step.<br/>When asking clarifying questions, keep them concise (10 or fewer, grouped by category).<br/>When presenting the table, ensure consistent units for time (minutes and hours/year).<br/>Use engineering and productivity language appropriate for a technical professional.<br/>End with a brief summary paragraph suggesting next actions (e.g., pilot one workflow or automate recurring reports).<br/><br/></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue"><span style="border-bottom:0.05em solid">Optional Parameters (for reuse)<br/></span></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">Focus Area: [Structural Engineering / Digital Practice / AI Research / Education / etc.]<br/>Tools: [Revit, RISA, Excel, Outlook, OneNote, etc.]<br/>Goal: [Save time / Improve QA / Standardize workflows / Create AI examples for training]</mark></em></td></tr><tr id="970ee14a-f1cf-8232-bd7f-814d787f398a" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>6. Engineering Research </strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><em>If you’re on the </em><em><span style="border-bottom:0.05em solid">free plan</span></em><em>, deep research is available, but it comes with limits on queries and model use. <br/><br/></em><strong>Click on the + to the left of chat input box &gt; select deep research before hitting enter<br/><br/></strong>This often takes 5 minutes or longer. If you hit run on it, create a new tab to start a fresh chat. <br/><strong><br/></strong> </td><td id="ud|Q" class="" style="width:903.2986450195312px">Go Deep with <strong>Deep Research. </strong>Deep Research mode works best when:<br/>1. You’re exploring an unfamiliar topic or need academic rigor.<br/>2. You want citations, data, or a formal summary.<br/>3. You’re looking for “what’s out there” or “what’s proven.”<br/><br/>✅ <strong>Best practices for Deep Research prompts:<br/></strong>Start with a <strong>verb</strong>: <em>Summarize, Compare, Review, Analyze, Evaluate.<br/></em>Specify <strong>scope</strong> (e.g., “for steel structures” or “since 2010”).<br/>Add <strong>depth</strong> instructions: “Include quantitative data, standards, and citations.”<br/><br/>Tip : Before turning on “Deep research”, ask for a deep research prompt and outline what you’re looking for.<br/><br/>Example:<br/><em><mark class="highlight-blue" data-notion-highlight="blue">“Evaluate the experimental validation of composite beam vibration models since 2015, highlighting differences between Eurocode and AISC approaches.”</mark></em><br/><br/><mark class="highlight-blue" data-notion-highlight="blue">”Summarize quantitative methods for optimizing structural systems for disassembly and material reuse — which metrics are most predictive of true circularity?”</mark></td></tr><tr id="57aee14a-f1cf-8288-a17d-014bbecc0b21" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>7. Connectors</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Click on the + to the left of chat input box &gt; select ”Add Sources” before hitting enter &gt; Click “Add” to give chatGPT access to outside sources.<br/>&gt; Insert Prompt<br/></strong><br/> <br/><br/><br/><br/><br/><br/><br/><br/>Advanced: Connect to gitHub reposity with Codex. <br/><strong>Click on the “Codex” in the top left &gt; Login to Github to connect to your repository &gt; Insert prompt <br/></strong></td><td id="ud|Q" class="" style="width:903.2986450195312px"><em><mark class="highlight-red" data-notion-highlight="red">*Use with caution - suggest starting with personal workspaces only to understand what you’re giving access to chatGPT. Admin control to connectors with Business &amp; Enterprise plans. </mark></em>For ChatGPT Business, Enterprise, and Edu customers, we do not use information accessed from connectors to train our models. Please see our <strong><a href="https://openai.com/enterprise-privacy/">Enterprise Privacy page</a></strong> for information on how we use business data.For ChatGPT Free, Plus, and Pro users, we may use information accessed from connectors to train our models if your “Improve the model for everyone” setting is on. You can read more about how your data is stored and used in <strong><a href="https://help.openai.com/en/articles/7730893-data-controls-faq">this article</a></strong> in our help center.<br/><br/>List of connectors<br/><a href="https://help.openai.com/en/articles/11487775-connectors-in-chatgpt">https://help.openai.com/en/articles/11487775-connectors-in-chatgpt</a><br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">Find the top 50 emails I could unsubscribe from. Generate ready-made Gmail search filters so I can find, delete, and unsubscribe. <br/><br/>List the top unimportant mail by the most instances in my inbox. I want to search and delete the emails taking up the most space in my inbox.</mark></em><br/><br/>Codex <br/>Codex can perform tasks for you such as writing features, answering questions about your codebase, fixing bugs, and proposing pull requests for review; each task runs in its own cloud sandbox environment, preloaded with your repository.<br/><a href="https://openai.com/index/introducing-codex/">https://openai.com/index/introducing-codex/</a><br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">”In my current project, find a bug in my last 5 commits and fix it.”</mark></em></td></tr><tr id="615ee14a-f1cf-8257-91cd-012c88e2bf67" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>8. Excel &amp; Tables</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Create a table view in ChatGPT , Try a prompt &gt; Use “Create a table”<br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Create a table of beam sizes that have a moment of inertia between 1400 and 1600 lbs/in^3. Sort the table by lightest beam size. Use only the AISC v16.0 shapes database</mark></em><strong><br/><br/>Create a worksheet. Try this prompt: <br/><br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Act as a structural engineering assistant.<br/>Create an Excel workbook titled “Uniformly Distributed Simply Supported Beam.”<br/>The workbook should include two sheets:<br/><br/>Sheet 1: Inputs<br/>Collect and clearly label the following input variables (with units shown beside each):w = uniform load (k/ft)L = span length (ft)x = distance from the left support (ft)E = modulus of elasticity (ksi)I = moment of inertia (in⁴)Format this sheet with: Bold headersOne variable per row (Variable | Description | Units | Input cell)Use light background shading for input cellsAdequate column widths for readability<br/><br/>Sheet 2: Calculations<br/>Reference all inputs from Sheet 1 (e.g., </mark></em><em><mark class="highlight-blue" data-notion-highlight="blue"><code>=Inputs!B2</code></mark></em><em><mark class="highlight-blue" data-notion-highlight="blue">).<br/>Compute and display the following quantities using the standard elastic-beam formulas for a simply supported beam under uniform load:<br/><br/>Reaction at each support, R=wL/2<br/>Shear force at distance x, Vx=w(L/2−x)<br/>Maximum bending moment at the beam’s center, Mmax⁡=wL^2/8<br/>Bending moment at distance x, Mx=wx/2(L−x)<br/>Maximum deflection at the center, Δmax⁡=5wL^4/(384EI)<br/>Deflection at distance x, Δx=wx/(24EI)(L^3−2Lx^2+x^3)<br/><br/>Include result cells for each formula and clearly label them. Use borders, bold labels, and consistent number formatting (e.g., 3 decimal places). Add a short note at the bottom:<br/>“Formulas per Roark’s Formulas for Stress and Strain and Hibbeler’s Mechanics of Materials (Simply Supported Beam with Uniform Load).”<br/><br/>Output Formatting: Use engineering notation where appropriate.Ensure results automatically update when input values change.<br/>Organize results in a readable table format with headers:<br/>| Quantity | Formula | Excel Formula | Result | Units |</mark></em></td><td id="ud|Q" class="" style="width:903.2986450195312px">To get ChatGPT to create a table or matrix, <strong>explicitly ask it to generate the output in a &quot;table&quot; or &quot;tabular format&quot; and clearly define the columns you want</strong>. You can also specify the format, such as &quot;Markdown table,&quot; &quot;CSV,&quot; or &quot;tab-delimited for Excel,&quot; to get structured data that is easy to copy and paste or use for further analysis.<br/><br/><br/>Depending on your plan, the blue prompt may not generate a downloadable excel file. You may be prompted to build a spreadsheet with Python code. If so, you can ask chatGPT to provide you a “no-code” solution to build this spreadsheet. <br/><br/>More about Tables in general: <a href="https://help.openai.com/en/articles/9213685-extracting-insights-with-chatgpt-data-analysis">https://help.openai.com/en/articles/9213685-extracting-insights-with-chatgpt-data-analysis</a></td></tr><tr id="f16ee14a-f1cf-8318-bb2b-0104ddc62cf7" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>9. Agent-Mode</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><em>If you’re on a </em><em><span style="border-bottom:0.05em solid">Paid</span></em><em> plan (or Team/Enterprise):<br/></em><br/>Build a spreadsheet in<strong> Agent mode. <br/><br/>Click on the + to the left of the chat input box &gt; select Agent-mode before hitting enter<br/><br/></strong><em><mark class="highlight-blue" data-notion-highlight="blue">Act as a structural engineering assistant. Create an Excel workbook titled ‘Uniformly Distributed Simply Supported Beam’.<br/><br/>Use two sheets:<br/><br/>Inputs: collect the uniform load w, span length L, distance x from the left support, modulus of elasticity E, and moment of inertia I.</mark></em><em><br/><br/></em><em><mark class="highlight-pink" data-notion-highlight="pink">Calculations: compute and display the following quantities using the standard formulas for a simply supported beam with a uniformly distributed load:<br/><br/>Reaction at each support, R=w*L/2<br/>Shear force at distance x, Vx=w*(L/2−x)<br/>Maximum bending moment at the beam’s center, Mmax⁡=w*L^2/8<br/>Bending moment at distance x, Mx=w*x/2(L−x)<br/>Maximum deflection at the center, Δmax⁡=5*w*L^4/(384*E*I)<br/>Deflection at distance x, Δx=w*x/(24*E*I)*(L^3−2*L*x^2+x^3)</mark></em><em><br/><br/></em><em><mark class="highlight-blue" data-notion-highlight="blue">The formulas in the Calculations sheet should reference the corresponding cells in the Inputs sheet so the results update automatically when inputs change.<br/><br/>Format the worksheets with clear headers, units, and sufficient cell widths for readability.<br/>Once complete, provide a download link to the spreadsheet.</mark></em><em><br/><br/></em><strong>You’ll see a new window open up inside of your chat where you actually watch the agent performing your task.  Once complete, Click the download button on the upper right corner of the window.</strong></td><td id="ud|Q" class="" style="width:903.2986450195312px">*Pro tip - the power of chatGPT is not having to type out equations but use image snips to help define equations. This is also helpful if you’re having chatGPT help you troubleshoot things. It does an adequate job at interpreting images.  Here’s a modification to the example where you don’t have to type out equations. <br/><br/><strong><span style="border-bottom:0.05em solid">Option 1: Pasting images </span></strong><span style="border-bottom:0.05em solid">-</span> You’ve found a snip of the shear and moment diagrams. See here: <a href="https://www.linsgroup.com/MECHANICAL_DESIGN/Beam/beam_formula.htm">Beam Formulas</a><br/>Snip the formula you like and paste it into the chat bar. Try a simplified prompt: <br/> <br/><em><mark class="highlight-blue" data-notion-highlight="blue">Create a spreadsheet. Use the attached image for all the formulas and equations. No need to search the internet for formulas. The spreadsheet should be titled Uniformly distributed simply supported beam.</mark></em><em><br/></em><br/><strong><span style="border-bottom:0.05em solid">Option 2: Let the agent find it</span></strong>- I don’t have the equations  and want the agent to find. Use the same prompt in the left but replace the pink text with “ <br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">Calculations: Find the equations to calculate shear, moment and deflection for a beam with a uniform load. Use reputable sources and have me validate the equations before building the spreadsheet. </mark></em></td></tr><tr id="febee14a-f1cf-82e7-81e9-81b4296c9a23" dir="ltr"><td id="Rx=&gt;" class="" style="width:210.33333333333334px"><strong>10. Simple Coding + Canvas</strong></td><td id="oMVP" class="" style="width:484.3298645019531px"><strong>Create .VBA script to batch process the calculations in your previously created spreadsheet. <br/><br/><br/><br/><br/><br/><br/>More advanced: Click on the + to the left of the chat input box &gt; select “Canvas” before hitting enter &gt; </strong>(this allows you to chat and make updates to your code in real-time)<strong><br/></strong></td><td id="ud|Q" class="" style="width:903.2986450195312px"><em><mark class="highlight-blue" data-notion-highlight="blue">Create a VBA script for my Excel file to batch process multiple entries through my beam spreadsheet. The input columns are in the &quot;Inputs&quot; worksheet, D2 - D6. The input variables are w, L, x, E, I, respectively. The outputs are found in the &quot;Calculations&quot; worksheet, D2 - D7. The output variables are respectively:  R, Vx, Mmax, Mx, deltaMax, deltaX.  Create a script that uses inputs in the &quot;Summary&quot; worksheet and writes the values from the outputs into the Summary worksheet. - The Summary sheet contains tabular data with input columns (w, L, x, E, I) and empty output columns (R, Vx, Mmax, Mx, deltaMax, deltaX). For each data row in Summary, the macro must write the row’s 5 inputs into Inputs!D2:D6, recalc the workbook, then write back the 6 outputs from Calculations!D2:D7 into the same row in Summary.</mark></em><br/><br/>Suggest using the <a href="https://chatgpt.com/g/g-hhh4w3eov-prompt-maker">Prompt Generator</a> to see how you can expand on the prompt above. <br/><br/>Canvas opens in a separate window, allowing you and ChatGPT to collaborate on a project. <a href="https://openai.com/index/introducing-canvas/">https://openai.com/index/introducing-canvas/</a><br/><br/>Download the macro-enabled spreadsheet here. <a href="https://app.notion.com/p/28980c019620803d9337c8a8c034c9f0?pvs=21">Uniformly_Distributed_Simply_Supported_Beam<br/></a>*You may need to “Unblock” the file by right-clicking on the file and going to Properties &gt; Check “Unblock”</td></tr></tbody></table><h3 id="eeeee14a-f1cf-8282-808e-01f07fc2eb0b" class="" dir="auto">Other Features</h3><table id="83eee14a-f1cf-8200-8a74-01004c140724" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="bc7ee14a-f1cf-82d2-9f96-8120684a8751" dir="ltr"><th id="|jO[" class="simple-table-header-color simple-table-header" style="width:214.00000762939453px"><strong>Agenda Item</strong></th><th id="SP}^" class="simple-table-header-color simple-table-header" style="width:484.99310302734375px"><strong>Instructions</strong></th><th id="tcYV" class="simple-table-header-color simple-table-header" style="width:1140px"><strong>Comments &amp; Examples</strong></th></tr></thead><tbody><tr id="e43ee14a-f1cf-8341-b060-01421434d02e" dir="ltr"><td id="|jO[" class="" style="width:214.00000762939453px"><strong>1.  Study Mode</strong></td><td id="SP}^" class="" style="width:484.99310302734375px"><strong>Click on the + to the left of chat input box &gt; select ”Study mode” before hitting enter &gt; Insert prompt<br/><br/>&gt; Upload design example (or homework or problem) </strong></td><td id="tcYV" class="" style="width:1140px"><em><mark class="highlight-blue" data-notion-highlight="blue">Help me understanding this example and walk me through designing a spread footing.<br/></mark></em><br/><a href="https://app.notion.com/p/28980c01962080ad9957f1a006268e03?pvs=21">Here’s a example for a spread footing design. </a><br/><br/></td></tr><tr id="bbcee14a-f1cf-821f-8326-01af04cad147" dir="ltr"><td id="|jO[" class="" style="width:214.00000762939453px"><strong>2. Personalized AI Assistants with custom GPTs</strong></td><td id="SP}^" class="" style="width:484.99310302734375px"><em>If you’re on a FREE ChatGPT plan: </em><strong><br/>Explore GPTs, find something you’re interested in. Test it</strong><br/><br/>OR<br/><br/><em>If you’re on a PAID ChatGPT plan:<br/></em><strong>Create a GPT that could write emails like you do!<br/></strong></td><td id="tcYV" class="" style="width:1140px"><strong>If you’re on a FREE ChatGPT plan: </strong><br/>Go to <a href="https://chatgpt.com/gpts">this link</a> and explore the GPTs. Find something interesting and ask it questions.<br/><br/>OR<br/><br/><strong>If you’re on a PAID ChatGPT plan:<br/></strong>Create a GPT of your liking (i.e. that could write emails like you do). If you lack ideas - ask ChatGPT for help. When you’re ready - click on Create and follow the steps. Good luck!<br/><br/><em><mark class="highlight-blue" data-notion-highlight="blue">Make an assistant that can respond and edit emails in my own voice. </mark></em></td></tr><tr id="ed4ee14a-f1cf-829c-a471-81bafd01f13d" dir="ltr"><td id="|jO[" class="" style="width:214.00000762939453px"><strong>3. Image creating</strong></td><td id="SP}^" class="" style="width:484.99310302734375px"><strong>Click on the + to the left of chat input box &gt; select ”Create Image” before hitting enter &gt; Insert prompt<br/></strong></td><td id="tcYV" class="" style="width:1140px"><em><mark class="highlight-blue" data-notion-highlight="blue">Create a logo for my structural engineering company.<br/><br/>Generate a stylized poster showing the elegance of exposed structural systems — steel, concrete, and timber.<br/><br/>Create an exploded isometric of a two-story steel moment frame showing connections and load transfer sequence.<br/></mark></em><br/><br/></td></tr><tr id="c3dee14a-f1cf-834d-a2e6-01745c560865" dir="ltr"><td id="|jO[" class="" style="width:214.00000762939453px"><strong>4. Video creation</strong></td><td id="SP}^" class="" style="width:484.99310302734375px"><em>If you’re on a PAID ChatGPT plan:<br/><br/>Go to </em><a href="https://sora.chatgpt.com/explore">https://sora.chatgpt.com/</a><br/><strong>New </strong>- Download the Sora app for most recent Sora 2 model.<br/><br/>The chatbar is at the bottom of the screen.<strong> Click “Image” or “Video” to change the content type &gt; Select Video &gt; Type in prompt</strong></td><td id="tcYV" class="" style="width:1140px"><em><mark class="highlight-blue" data-notion-highlight="blue">Show me a video of a woman holding construction plans walking on site with the construction workers pointing at things.<br/><br/>Concrete column buckling from too much load and cracking under the load.</mark></em></td></tr><tr id="73eee14a-f1cf-83c9-bdc5-81a05151d9cb" dir="ltr"><td id="|jO[" class="" style="width:214.00000762939453px"><strong>5. Advanced Voice Mode</strong></td><td id="SP}^" class="" style="width:484.99310302734375px">Best on your phone - Click the voice button to launch into chat.</td><td id="tcYV" class="" style="width:1140px"></td></tr></tbody></table><p id="211ee14a-f1cf-8326-a505-01d02eef346e" class="" dir="auto">
+</p></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
